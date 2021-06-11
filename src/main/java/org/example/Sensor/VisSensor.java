@@ -35,7 +35,7 @@ public class VisSensor {
             for (int i=0; i<50; i++) {
                 String strengFraPort = hentStrengFraPort(port);
                 System.out.println(i +  " læst fra port: " + strengFraPort);
-                System.out.println(strengFraPort);
+                //System.out.println(strengFraPort);
             }
         }
 
