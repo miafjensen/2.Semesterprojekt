@@ -1,10 +1,11 @@
 package org.example.Sensor;
 
 import com.fazecast.jSerialComm.SerialPort;
-import jssc.SerialPortException;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+
 
 public class ConnectionEKG {
-
+//her hentes data
 
     private SerialPort serialPort;
 
@@ -23,13 +24,15 @@ public class ConnectionEKG {
         if (EKGPort != -1) {
             SerialPort port = porte[EKGPort];
 
-            port.setComPortTimeouts(SerialPort.NO_PARITY, 10, 0); // port tjekk
-
+            port.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 10, 0); // port tjekk
+            port.openPort();
             port.setBaudRate(38400);
             port.setNumDataBits(8);
             port.setNumStopBits(1);
             port.setParity(SerialPort.NO_PARITY);
-            port.openPort();
+            //port.addDataListener((SerialPortDataListener) this);
+
+           // port.addDataListener();
             serialPort = port;
         }
     }
@@ -38,8 +41,7 @@ public class ConnectionEKG {
         byte[] buffer = new byte[1024];
 
         int antalByteLæst = serialPort.readBytes(buffer, buffer.length);
-        String rawData = new String(buffer, 0, antalByteLæst);
-        return rawData;
+        return new String(buffer, 0, antalByteLæst);
     }
 
 
