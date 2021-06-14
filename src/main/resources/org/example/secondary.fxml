@@ -16,7 +16,7 @@
         </yAxis>
       </LineChart>
       <Label layoutX="39.0" layoutY="76.0" text="Puls" />
-      <Label id="pulsdata" layoutX="88.0" layoutY="76.0" text="---" />
+      <Label id="pulsdata" fx:id="PulsField" layoutX="88.0" layoutY="76.0" text="---" />
       <Button fx:id="StartMålingButton" layoutX="253.0" layoutY="29.0" mnemonicParsing="false" text="Start Måling" />
       <Button fx:id="StopMålingButton" layoutX="342.0" layoutY="29.0" mnemonicParsing="false" text="Stop Måling" />
       <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
