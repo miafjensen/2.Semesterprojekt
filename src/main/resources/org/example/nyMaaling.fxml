@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SecondaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.NyMaalingController">
    <children>
-       <Button fx:id="secondaryButton" layoutX="527.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToPrimary" text="Tilbage til start " />
+       <Button fx:id="secondaryButton" layoutX="508.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToPrimary" text="Tilbage til start " />
       <LineChart fx:id="GraphArea" layoutX="27.0" layoutY="118.0" prefHeight="333.0" prefWidth="510.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />

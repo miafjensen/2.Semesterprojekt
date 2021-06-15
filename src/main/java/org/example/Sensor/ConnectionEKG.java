@@ -2,9 +2,10 @@ package org.example.Sensor;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
 
 
-public class ConnectionEKG {
+public class ConnectionEKG implements SensorObservable {
 //her hentes data
 
     private SerialPort serialPort;
@@ -30,7 +31,24 @@ public class ConnectionEKG {
             port.setNumDataBits(8);
             port.setNumStopBits(1);
             port.setParity(SerialPort.NO_PARITY);
-            //port.addDataListener((SerialPortDataListener) this);
+            port.addDataListener(new SerialPortDataListener() {
+                //https://github.com/cbudtz/EKGMonitorObserver/blob/master/src/main/java/Main.java
+
+                @Override
+                public int getListeningEvents() {
+                    return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+                }
+
+                @Override
+                public void serialEvent(SerialPortEvent serialPortEvent) {
+                    if(serialPortEvent.getEventType()!= SerialPort.LISTENING_EVENT_DATA_AVAILABLE){
+                        return;
+                    }
+                byte[] buffer = new byte[port.bytesAvailable()];
+                    int antalByteLæst = port.readBytes(buffer, buffer.length);
+                    System.out.print(new String(buffer));
+                }
+            });
 
            // port.addDataListener();
             serialPort = port;
@@ -38,12 +56,22 @@ public class ConnectionEKG {
     }
 
     public String readData() {
-        byte[] buffer = new byte[1024];
-
+        byte[] buffer = new byte[4095];
         int antalByteLæst = serialPort.readBytes(buffer, buffer.length);
         return new String(buffer, 0, antalByteLæst);
     }
 
 
+    @Override
+    public void registerObserver(SensorObserver sensorObserver) {
+        //hvilken klasse skal gøres afhængig af materialet herfra?
+        //skal kaldes udefra, men ikke nædvendigvis portdatafilter
+
+    }
+
+    @Override
+    public void run() {
+
+    }
 }
 

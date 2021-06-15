@@ -2,7 +2,7 @@ package org.example.Database;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MeasurementConn {
+public class MeasurementDTO {
 
     // Baseret på kode lavet i løbet af semesteret i IT2
 
@@ -12,7 +12,8 @@ public class MeasurementConn {
     private ResultSet resultSet;
 
 
-    public MeasurementConn(Connection connection) { this.connection = connection; }
+    public MeasurementDTO(Connection connection) { this.connection = connection;
+    createTable();}
 
     public void createTable () {
         String SQLTable = "CREATE TABLE if not exists Measurements (\n" +
@@ -23,8 +24,11 @@ public class MeasurementConn {
                 "                                            PRIMARY KEY (id)\n" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
         try{
-            preparedStatement = connection.prepareStatement(SQLTable);
-            preparedStatement.execute();
+            Statement stmt = connection.createStatement();
+            stmt.execute(SQLTable);
+
+            //preparedStatement = connection.prepareStatement(SQLTable);
+            //preparedStatement.execute();
 
         }catch (SQLException throwables){
             throwables.printStackTrace();
@@ -32,13 +36,22 @@ public class MeasurementConn {
 
     }
 
-    public void InsertIntoMeasurements (int value1, int value2){
+
+    public void InsertIntoMeasurements (int value1, int value2,ArrayList<Integer> arrayList){
         String SQLMeasurements = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
+        //i afprøvning - beskriv at I først kører med en enkelt indsætning og derefter bygger om til batches
+        //batches forudsættes at den enkelte værdi kan komme ind- derfor er det vigtigt, at I
+        /*
+        har den del med, men kan udelade den første.
+         */
         try{
             preparedStatement = connection.prepareStatement(SQLMeasurements);
             preparedStatement.setInt(1, value1);
             preparedStatement.setInt(2, value2);
             preparedStatement.execute();
+            //kan den bruges til at udføre større opdateringer? fx. med 1000 målinger? 2000?
+            //kig på execute batch updates i MySQL.
+
 
         }catch (SQLException throwables){
             throwables.printStackTrace();
