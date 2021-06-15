@@ -56,7 +56,7 @@ public class ConnectionEKG implements SensorObservable {
     }
 
     public String readData() {
-        byte[] buffer = new byte[4095];
+        byte[] buffer = new byte[serialPort.bytesAvailable()];
         int antalByteLæst = serialPort.readBytes(buffer, buffer.length);
         return new String(buffer, 0, antalByteLæst);
     }

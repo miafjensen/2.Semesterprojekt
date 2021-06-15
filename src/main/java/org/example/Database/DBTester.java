@@ -17,5 +17,9 @@ public class DBTester {
         MeasurementDTO cm = new MeasurementDTO(conn);
         //System.out.println(connection.getClientInfo());
 
+        // test  indsætning i table
+        cm.InsertIntoMeasurements((int) 140499,(int) 5667);
+
+
     }
 }

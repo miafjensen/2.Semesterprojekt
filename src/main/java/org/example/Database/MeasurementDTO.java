@@ -1,4 +1,5 @@
 package org.example.Database;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -12,39 +13,42 @@ public class MeasurementDTO {
     private ResultSet resultSet;
 
 
-    public MeasurementDTO(Connection connection) { this.connection = connection;
-    createTable();}
+    public MeasurementDTO(Connection connection) {
+        this.connection = connection;
+        /*createTable()*/
+        ;
+    }
 
-    public void createTable () {
+    public void createTable() {
         String SQLTable = "CREATE TABLE if not exists Measurements (\n" +
                 "                                            id int NOT NULL AUTO_INCREMENT,\n" +
                 "                                            Cpr varchar(6) NOT NULL,\n" +
                 "                                            Måling int NOT NULL,\n" +
-                "                                            Dato timestamp NOT NULL,\n" +
+                "                                            Dato   timestamp default CURRENT_TIMESTAMP null\n" +
                 "                                            PRIMARY KEY (id)\n" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
-        try{
+        try {
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
 
             //preparedStatement = connection.prepareStatement(SQLTable);
             //preparedStatement.execute();
 
-        }catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
 
-    public void InsertIntoMeasurements (int value1, int value2,ArrayList<Integer> arrayList){
+    public void InsertIntoMeasurements(int value1, int value2) {
         String SQLMeasurements = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
         //i afprøvning - beskriv at I først kører med en enkelt indsætning og derefter bygger om til batches
         //batches forudsættes at den enkelte værdi kan komme ind- derfor er det vigtigt, at I
         /*
         har den del med, men kan udelade den første.
          */
-        try{
+        try {
             preparedStatement = connection.prepareStatement(SQLMeasurements);
             preparedStatement.setInt(1, value1);
             preparedStatement.setInt(2, value2);
@@ -53,22 +57,30 @@ public class MeasurementDTO {
             //kig på execute batch updates i MySQL.
 
 
-        }catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-    public ArrayList<measurementObjects> FindAllMeasurementResults (int cprTal) {
+
+    public void InsertIntoMeasurementsArray (int value1, int value2,ArrayList<Integer> arrayList){
+
+    }
+
+
+
+    public ArrayList<measurementObjects> FindAllMeasurementResults(int CPR) {
         measurementObjects msObject = new measurementObjects();
         ArrayList liste = new ArrayList();
 
-        String SQLResults = "SELECT Måling, Dato FROM measurements WHERE Cpr = " + cprTal + ";";
+        String SQLResults = "SELECT Måling, Dato FROM measurements WHERE Cpr = " + CPR + ";";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SQLResults);
 
             while (resultSet.next()) {
                 System.out.println(
-                        "Måling" + resultSet.getInt("Måling") + "\n" +
+                        "id" + resultSet.getInt("id") + "\n" +
+                                "Måling" + resultSet.getInt("Måling") + "\n" +
                                 "Dato" + resultSet.getTimestamp("Dato") + "\n"
                 );
             }

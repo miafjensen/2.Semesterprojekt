@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.NyMaalingController">
    <children>
-       <Button fx:id="secondaryButton" layoutX="508.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToPrimary" text="Tilbage til start " />
+       <Button fx:id="secondaryButton" layoutX="508.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
       <LineChart fx:id="GraphArea" layoutX="27.0" layoutY="118.0" prefHeight="333.0" prefWidth="510.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
@@ -16,10 +16,10 @@
         </yAxis>
       </LineChart>
       <Label layoutX="39.0" layoutY="76.0" text="Puls" />
-      <Label id="pulsdata" fx:id="PulsField" layoutX="88.0" layoutY="76.0" text="---" />
-      <Button fx:id="StartMålingButton" layoutX="253.0" layoutY="29.0" mnemonicParsing="false" text="Start Måling" />
-      <Button fx:id="StopMålingButton" layoutX="342.0" layoutY="29.0" mnemonicParsing="false" text="Stop Måling" />
-      <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
-      <TextField fx:id="CPRfield" layoutX="88.0" layoutY="29.0" text="xxxxxx" />
+      <Label id="pulsdata" fx:id="pulsLabel" layoutX="88.0" layoutY="76.0" text="---" />
+      <Button fx:id="StartMålingButton" layoutX="253.0" layoutY="29.0" mnemonicParsing="false" onAction="#startMaaling" text="Start Måling" />
+      <Button fx:id="StopMålingButton" layoutX="342.0" layoutY="29.0" mnemonicParsing="false" onAction="#stop" text="Stop Måling" />
+      <Label fx:id="CPR" layoutX="36.0" layoutY="33.0" text="CPR:" />
+      <Label fx:id="cprLabel1" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
    </children>
 </AnchorPane>

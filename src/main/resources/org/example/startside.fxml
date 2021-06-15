@@ -6,9 +6,12 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.StartsideController">
    <children>
-      <Button fx:id="primaryButton" layoutX="277.0" layoutY="250.0" text="Se Data">
+      <Button fx:id="seDataButton" layoutX="277.0" layoutY="250.0" text="Se Data">
       </Button>
-      <Button fx:id="secondaryButton" layoutX="270.0" layoutY="194.0" onAction="#switchToSecondary" text="Ny Måling" />
+      <Button fx:id="nyMålingButton" layoutX="270.0" layoutY="194.0" onAction="#switchToNyMaaling" text="Ny Måling" />
+      <Label fx:id="CPR" layoutX="36.0" layoutY="33.0" text="CPR:" />
+      <Label fx:id="cprLabel1" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
+
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
