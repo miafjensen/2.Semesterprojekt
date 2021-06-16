@@ -19,7 +19,7 @@ StartsideController startC = new StartsideController();
     @FXML
     private void switchToStartside() throws IOException {
         cpr = cprUser.getText();
-        //startC.setCpr(cpr); //https://stackoverflow.com/questions/32147304/change-label-text-in-a-new-scene-which-was-entered-in-different-scene-javafx
+        startC.setCpr(cpr); //https://stackoverflow.com/questions/32147304/change-label-text-in-a-new-scene-which-was-entered-in-different-scene-javafx
         App.setRoot("startside");
        /* if (cprUser.getText().matches("[0-9]")) {
 

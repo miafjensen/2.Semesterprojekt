@@ -14,7 +14,10 @@ public class StartsideController {
     private void switchToNyMaaling() throws IOException {
         App.setRoot("nyMaaling");
     }
-
+    @FXML
+    private void switchToLogIn() throws IOException {
+        App.setRoot("logIn");
+    }
 
     public void setCpr(String cpr) {
         cprLabel.setText(cpr);

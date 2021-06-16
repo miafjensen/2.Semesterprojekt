@@ -104,6 +104,10 @@ public class NyMaalingController implements SensorObserver {
         event.shutdown();
         control = true;
     }
+    @FXML
+    private void switchToLogIn() throws IOException {
+        App.setRoot("logIn");
+    }
 
     @Override
     public void notify(PortDataFilter portDataFilter) {
