@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LogInController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LogInController">
    <children>
-      <TextField fx:id="cprUser" layoutX="213.0" layoutY="148.0" text="CPR" />
+      <TextField fx:id="cprUser" layoutX="213.0" layoutY="148.0" promptText="CPR" text="123456" />
       <TextField fx:id="textPassword" layoutX="213.0" layoutY="187.0" text="Kodeord" />
       <Button fx:id="logInButton" layoutX="255.0" layoutY="228.0" mnemonicParsing="false" onAction="#switchToStartside" text="Log Ind" />
    </children>

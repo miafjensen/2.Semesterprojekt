@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class DBConn {
     private  Connection connectionobject;
-    String DB_url = "jdbc:mysql://localhost:3306/Semesterprojekt2";
+    String DB_url = "jdbc:mysql://localhost:3306/brugere";
     private String user = "root";
-    private String password = "1234mySQL"; // personligt kodeord
+    private String password = ""; // personligt kodeord
     private String JDBC_driver = "com.mysql.cj.jdbc.Driver";
 
     //status fra William - jeres Connection er oprettet, I manglede lige et par dependencies fra Maven

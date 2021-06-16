@@ -18,10 +18,8 @@ public class DBTester {
         //System.out.println(connection.getClientInfo());
 
         // test  indsætning i table
-        for (int i = 0; i < 50; i++) {
-            cm.InsertIntoMeasurements((int) 140499, (int) 5667);
+        cm.InsertIntoMeasurements((int) 140499,(int) 5667);
 
 
-        }
     }
 }

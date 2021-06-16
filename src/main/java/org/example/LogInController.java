@@ -22,7 +22,7 @@ public class LogInController {
         if (cprUser.getText().matches("\\d{6}")) {
             cpr = cprUser.getText();
             //startC.setCpr(cpr);
-            App.setRoot("startside");
+            LineChartApp.setRoot("startside");
         }else{
             //https://code.makery.ch/blog/javafx-dialogs-official/
             Alert alert = new Alert(Alert.AlertType.ERROR);

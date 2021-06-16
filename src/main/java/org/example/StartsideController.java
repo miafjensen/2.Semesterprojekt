@@ -12,11 +12,12 @@ public class StartsideController {
 
     @FXML
     private void switchToNyMaaling() throws IOException {
-        App.setRoot("nyMaaling");
+        //App.setRoot();
+        LineChartApp.setRoot("nyMaaling");
     }
     @FXML
     private void switchToLogIn() throws IOException {
-        App.setRoot("logIn");
+        LineChartApp.setRoot("logIn");
     }
 
     public void setCpr(String cpr) {

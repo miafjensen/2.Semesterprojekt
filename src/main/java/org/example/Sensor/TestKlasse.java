@@ -7,7 +7,6 @@ import com.google.common.base.CharMatcher;
 public class TestKlasse {
 
     public static String buffer = "";
-    private static int[] tempLib2 = new int[100];
     public static int[] dataLib = new int[100];
 
     public static void main(String[] args) throws Exception {
@@ -38,20 +37,12 @@ public class TestKlasse {
                 System.out.println("buffer: " + buffer);
                 if (buffer != null) {
 
+                    String[] tempLib = buffer.split("\\s*");
+                    //https://stackoverflow.com/questions/13750716/what-does-regular-expression-s-s-do
+                    //bruges til at undgå whitespaces.
 
-                        String[] tempLib = buffer.split("\\s*");
-                        //https://stackoverflow.com/questions/13750716/what-does-regular-expression-s-s-do
-                        //bruges til at undgå whitespaces.
-                    //https://stackoverflow.com/questions/41953388/java-split-and-trim-in-one-shot trim
-
-                        tempLib2[s] = Integer.parseInt(tempLib[s]);
-                        //fortolk og konverter vores data.
-                    if(tempLib2[s]>4096){
-                        tempLib2[s] = -1;
-                        System.out.println(s + " value out of bounds");
-
-                    }
-                    dataLib[s]=tempLib2[s];
+                    dataLib[s] = Integer.parseInt(tempLib[s]);
+                    //fortolk og konverter vores data.
 
                     System.out.println("t: " + dataLib[s]);
                     System.out.println(s);

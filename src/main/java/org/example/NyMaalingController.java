@@ -7,9 +7,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.graph.Graph;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -36,6 +39,12 @@ public class NyMaalingController implements SensorObserver {
     public TextField CPRfield;
     boolean control = true;
     String cpr;
+    @FXML
+            //AVoid making uncasted object Initialises
+    LineChart<String,Integer> GraphArea;
+    XYChart.Series<String,Integer> dataseries = new XYChart.Series();
+//vi kan også bruge <String,Integer> hvis vi skriver ""+index
+
 
 
     DBConn dbConn = new DBConn();
@@ -43,13 +52,69 @@ public class NyMaalingController implements SensorObserver {
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     measurementObjects mObjects = new measurementObjects();
 
+
+
     @FXML
     Label pulsLabel;
     @FXML
     Label cprLabel;
 
 
+
+
+
+    /*public int[] getSensorData(){
+
+    }
+
+     */
+
+
+
+
+    public void updateGraph(int[] input){
+        dataseries.setName("hestenet");
+
+        Thread taskThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(int i =0;i<input.length; i++){
+
+                                // GraphArea.getData().add(new XYChart.Data<>(i,input[i]));
+
+                                dataseries.getData().add(new XYChart.Data<String,Integer>( ""+i,input[i]));
+
+                                //Fejlen ligger her - skal vi rette LineCHart til en
+
+                               // System.out.println("hejsaaaa :)");
+                            }
+                            GraphArea.getData().removeAll();
+                            GraphArea.getData().add(dataseries);
+                        }
+                    });
+
+            }
+        });
+
+        taskThread.start();
+
+
+       //
+
+
+
+
+
+
+    }
+
     @FXML
+    /*
     private void onEnter(ActionEvent ae){
         System.out.println("test");
 
@@ -72,14 +137,20 @@ public class NyMaalingController implements SensorObserver {
 
 
     }
+*/
 
-    @FXML
+
+
     private void switchToStartside() throws IOException {
         if (control == false) {
             event.shutdown();
             control = true;
         }
-        App.setRoot("startside");
+        try {
+            App.setRoot("startside");
+        }catch (Exception ex){
+            LineChartApp.setRoot("startside");
+        }
     }
 
     @FXML
@@ -118,4 +189,24 @@ public class NyMaalingController implements SensorObserver {
     }
 
 
+    public void updateGraph(ActionEvent actionEvent) {
+
+        //updateGraph(generateData());
+        for (int index : generateData()){
+           // System.out.println(index);
+
+        }
+        updateGraph(generateData());
+    }
+
+    private int[] generateData(){
+            int[] data = new int[25];
+         for(int i =0;i<data.length; i++){
+             data[i]= (int) (Math.random() * 10000);
+        }
+
+
+            return data;
+
+    }
 }
