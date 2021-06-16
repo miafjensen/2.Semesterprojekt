@@ -24,7 +24,7 @@ public class StartsideController {
         App.setRoot("seData");
     }
 
-    public void setCpr(String cpr) {
-        cprLabel.setText(cpr);
+    public void setCpr(String cprTal) {
+        cprLabel.setText("" + cprTal);
     }
 }

@@ -20,14 +20,15 @@ public class MeasurementDTO {
     }
 
     public void createTable() {
-        String SQLTable = "CREATE TABLE if not exists Measurements (\n" +
+        try {
+        String SQLTable = "CREATE TABLE if not exists MeasurementsAgain (\n" +
                 "                                            id int NOT NULL AUTO_INCREMENT,\n" +
                 "                                            Cpr varchar(6) NOT NULL,\n" +
                 "                                            Måling int NOT NULL,\n" +
                 "                                            Dato   timestamp default CURRENT_TIMESTAMP null\n" +
                 "                                            PRIMARY KEY (id)\n" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
-        try {
+
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
 
@@ -42,6 +43,7 @@ public class MeasurementDTO {
 
 
     public void InsertIntoMeasurements(int value1, int value2) {
+        createTable();
         String SQLMeasurements = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
         //i afprøvning - beskriv at I først kører med en enkelt indsætning og derefter bygger om til batches
         //batches forudsættes at den enkelte værdi kan komme ind- derfor er det vigtigt, at I

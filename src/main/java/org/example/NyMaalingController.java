@@ -33,9 +33,8 @@ public class NyMaalingController implements SensorObserver {
     private static String password = "1234mySQL"; //indtast jeres personlige password til localhost
 
     ScheduledExecutorService event;
-    public TextField CPRfield;
     boolean control = true;
-    String cpr;
+    int cpr;
 
 
     DBConn dbConn = new DBConn();
@@ -48,30 +47,6 @@ public class NyMaalingController implements SensorObserver {
     @FXML
     Label cprLabel;
 
-
-    @FXML
-    private void onEnter(ActionEvent ae){
-        System.out.println("test");
-
-        if (cpr.matches("[0-9]")){
-        if (cpr.length()== 6){
-        int CPR = Integer.parseInt(CPRfield.getText());
-        mObjects.setCPR(CPR);
-        cpr = CPRfield.getText() ;}}
-        else {
-            //https://code.makery.ch/blog/javafx-dialogs-official/
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fejl i CPR");
-            alert.setHeaderText(null);
-            alert.setContentText("Indtast 6 cifre i CPR" +
-                    "Eksempel: 120101");
-            alert.showAndWait();
-
-        }
-        System.out.println(cpr);
-
-
-    }
 
     @FXML
     private void switchToStartside() throws IOException {
