@@ -91,7 +91,7 @@ public class NyMaalingController implements SensorObserver {
                     Platform.runLater(() -> {
                         int puls = (int) Math.round(110 - (Math.random() * 60));
 
-                       //int cprTal = Integer.parseInt(cpr);
+                       //int cprTal = Integer.parseInt(cpr); // virker ikke
 
                         pulsLabel.setText(""+puls);
 

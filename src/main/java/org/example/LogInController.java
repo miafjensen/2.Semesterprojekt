@@ -38,6 +38,11 @@ public class LogInController {
         System.out.println(cpr);
     }
 
+    @FXML
+    public void getCpr(){
+
+    }
+
 }
 /*if (cpr.matches("[0-9]")){
         if (cpr.length()== 6){

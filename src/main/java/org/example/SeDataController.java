@@ -1,14 +1,20 @@
 package org.example;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class StartsideController {
+import java.io.IOException;
+
+public class SeDataController {
 
 
     @FXML
     Label cprLabel;
+
+    @FXML
+    private void switchToStartside() throws IOException {
+               App.setRoot("startside");
+    }
 
     @FXML
     private void switchToNyMaaling() throws IOException {
@@ -17,11 +23,6 @@ public class StartsideController {
     @FXML
     private void switchToLogIn() throws IOException {
         App.setRoot("logIn");
-    }
-
-    @FXML
-    private void switchToSeData() throws IOException {
-        App.setRoot("seData");
     }
 
     public void setCpr(String cpr) {

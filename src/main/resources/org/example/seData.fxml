@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SeDataController">
+   <children>
+      <Button fx:id="tilStartsideButton" layoutX="435.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
+      <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
+      <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
+      <Button fx:id="logUdButton" layoutX="547.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
+      <TableView fx:id="tableView" layoutX="247.0" layoutY="88.0" prefHeight="296.0" prefWidth="324.0">
+        <columns>
+          <TableColumn prefWidth="126.66664123535156" text="ID" />
+          <TableColumn prefWidth="140.3333740234375" text="Måling" />
+        </columns>
+      </TableView>
+      <SplitMenuButton fx:id="dataSætMenuButton" layoutX="48.0" layoutY="124.0" mnemonicParsing="false" text="Vælg Datasæt">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
+
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</AnchorPane>

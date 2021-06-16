@@ -15,6 +15,8 @@ public class EKGDataGenerator implements SensorObservable{
     public void run() {
         PortDataFilter EKGDTO = new PortDataFilter();
         while (true){
+
+
         }
 
         // kan hente array fra PortDataFilter kan laves i constructor oven over
