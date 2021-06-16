@@ -62,10 +62,26 @@ public class MeasurementDTO {
         }
     }
 
-    public void InsertIntoMeasurementsArray (int value1, int value2,ArrayList<Integer> arrayList){
+
+
+
+
+    public void InsertIntoMeasurementsArray(int value1, ArrayList<Integer> value2) {
+        String SQLMeasurementsArray = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
+        try {
+            preparedStatement = connection.prepareStatement(SQLMeasurementsArray);
+            preparedStatement.setInt(1, value1);
+            preparedStatement.setArray(2, (Array) value2);
+            preparedStatement.execute();
+            //kan den bruges til at udføre større opdateringer? fx. med 1000 målinger? 2000?
+            //kig på execute batch updates i MySQL.
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
-
 
 
     public ArrayList<measurementObjects> FindAllMeasurementResults(int CPR) {
