@@ -20,7 +20,12 @@ public class StartsideController {
         LineChartApp.setRoot("logIn");
     }
 
-    public void setCpr(String cpr) {
-        cprLabel.setText(cpr);
+    @FXML
+    private void switchToSeData() throws IOException {
+        App.setRoot("seData");
+    }
+
+    public void setCpr(String cprTal) {
+        cprLabel.setText("" + cprTal);
     }
 }

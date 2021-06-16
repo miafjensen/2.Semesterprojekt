@@ -6,11 +6,11 @@
 
 <AnchorPane prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.StartsideController">
    <children>
-      <Button fx:id="seDataButton" layoutX="277.0" layoutY="250.0" text="Se Data">
+      <Button fx:id="seDataButton" layoutX="277.0" layoutY="250.0" onAction="#switchToSeData" text="Se Data">
       </Button>
       <Button fx:id="nyMålingButton" layoutX="270.0" layoutY="194.0" onAction="#switchToNyMaaling" text="Ny Måling" />
-      <Label fx:id="CPR" layoutX="36.0" layoutY="33.0" text="CPR:" />
-      <Label fx:id="cprLabel1" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
+      <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
+      <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
       <Button fx:id="logUdButton" layoutX="490.0" layoutY="36.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
 
    </children>

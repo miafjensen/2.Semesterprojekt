@@ -2,13 +2,15 @@ package org.example.Sensor;
 
 import com.google.common.base.CharMatcher;
 
+import java.sql.Array;
+
 public class PortDataFilter {
 
 
     public static String buffer = "";
 
     public int[] dataFilter() {
-        int[] dataLib = new int[5000];
+        int[] dataLib = new int[50];
 
         ConnectionEKG connEKG = new ConnectionEKG();
 
@@ -16,7 +18,7 @@ public class PortDataFilter {
 
             try{
 
-                for (int s = 0; s < 100; s++) {
+                for (int s = 0; s < dataLib.length ; s++) {
 
 
                     String data = connEKG.readData();

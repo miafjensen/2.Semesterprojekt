@@ -2,32 +2,50 @@ package org.example;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.example.Database.measurementObjects;
 
 import java.io.IOException;
 
-public class LogInController {
+public class SeDataController {
 
-    public TextField cprUser;
-    public String cpr;
-    public int cprTal;
-    StartsideController startC = new StartsideController();
-    measurementObjects mObjects = new measurementObjects();
+
     @FXML
     Label cprLabel;
 
     @FXML
-    private void switchToStartside(ActionEvent ae) throws IOException {
-        if (cprUser.getText().matches("\\d{6}")) {
-            cpr = cprUser.getText();
+    TextField cprField;
+
+    String cpr;
+    int cprTal;
+
+    @FXML
+    private void switchToStartside() throws IOException {
+        App.setRoot("startside");
+    }
+
+    @FXML
+    private void switchToNyMaaling() throws IOException {
+        App.setRoot("nyMaaling");
+    }
+
+    @FXML
+    private void switchToLogIn() throws IOException {
+        App.setRoot("logIn");
+    }
+
+    public void setCpr(String cpr) {
+        cprLabel.setText(cpr);
+    }
+
+
+    @FXML
+    private void searchByCpr(ActionEvent ae) throws IOException {
+        if (cprField.getText().matches("\\d{6}")) {
+            cpr = cprField.getText();
             cprTal = Integer.parseInt(cpr);
-            App.setRoot("startside");
-        }else{
+        } else {
             //https://code.makery.ch/blog/javafx-dialogs-official/
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl i CPR");
@@ -41,5 +59,4 @@ public class LogInController {
 
         System.out.println(cpr + "  " + cprTal);
     }
-
 }

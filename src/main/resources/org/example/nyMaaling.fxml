@@ -20,7 +20,7 @@
         </yAxis>
       </LineChart>
       <Label layoutX="39.0" layoutY="76.0" text="Puls" />
-      <Label id="pulsdata" fx:id="pulsLabel" layoutX="88.0" layoutY="76.0" text="---" />
+      <Label id="pulsdata" fx:id="pulsLabel" layoutX="88.0" layoutY="76.0" prefHeight="17.0" prefWidth="24.0" text="---" />
        <Button fx:id="logUdButton" layoutX="540.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
        <Button fx:id="StartMålingButton" layoutX="253.0" layoutY="29.0" mnemonicParsing="false" onAction="#startMaaling" text="Start Måling" />
        <Button fx:id="StopMålingButton" layoutX="342.0" layoutY="29.0" mnemonicParsing="false" onAction="#stop" text="Stop Måling" />

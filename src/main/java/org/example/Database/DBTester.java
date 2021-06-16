@@ -18,8 +18,10 @@ public class DBTester {
         //System.out.println(connection.getClientInfo());
 
         // test  indsætning i table
-        cm.InsertIntoMeasurements((int) 140499,(int) 5667);
+        for (int i = 0; i < 50; i++) {
+            cm.InsertIntoMeasurements((int) 140499, (int) 5667);
 
 
+        }
     }
 }
