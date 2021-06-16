@@ -2,6 +2,7 @@ package org.example.Database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBTester {
 
@@ -18,10 +19,17 @@ public class DBTester {
         //System.out.println(connection.getClientInfo());
 
         // test  indsætning i table
-        for (int i = 0; i < 50; i++) {
-            cm.InsertIntoMeasurements((int) 140499, (int) 5667);
+       /* for (int i = 0; i < 50; i++) {
+            int s = 10 * i;
+            int cpr = 124365;
+            cm.InsertIntoMeasurements(cpr, s);
 
 
+        }*/
+        int cprTal = 767676;
+        ArrayList<measurementObjects> result = cm.FindAllMeasurementResults(cprTal);
+        for (measurementObjects r : result) {
+           // System.out.print(" ID " + r.getId() + "   Måling " + r.getMåling() + "   Dato " + r.getDato() + "\n");
         }
     }
 }

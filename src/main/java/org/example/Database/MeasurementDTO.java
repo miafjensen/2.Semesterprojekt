@@ -43,7 +43,7 @@ public class MeasurementDTO {
 
 
     public void InsertIntoMeasurements(int value1, int value2) {
-        createTable();
+        //createTable();
         String SQLMeasurements = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
         //i afprøvning - beskriv at I først kører med en enkelt indsætning og derefter bygger om til batches
         //batches forudsættes at den enkelte værdi kan komme ind- derfor er det vigtigt, at I
@@ -90,16 +90,16 @@ public class MeasurementDTO {
         measurementObjects msObject = new measurementObjects();
         ArrayList liste = new ArrayList();
 
-        String SQLResults = "SELECT Måling, Dato FROM measurements WHERE Cpr = " + CPR + ";";
+        String SQLResults = "SELECT id, Måling, Dato FROM measurements WHERE Cpr = " + CPR + ";";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SQLResults);
 
             while (resultSet.next()) {
                 System.out.println(
-                        "id" + resultSet.getInt("id") + "\n" +
-                                "Måling" + resultSet.getInt("Måling") + "\n" +
-                                "Dato" + resultSet.getTimestamp("Dato") + "\n"
+                        "id: " + resultSet.getInt("id")  +
+                                "   Måling: " + resultSet.getInt("Måling") +
+                                "   Dato: " + resultSet.getTimestamp("Dato") + "\n"
                 );
             }
 
@@ -112,3 +112,22 @@ public class MeasurementDTO {
 
 
 }
+
+/*public ArrayList<MeasurementObjects> FindAllMeasurementResultsByCPR (int cprTal) {
+        ArrayList<MeasurementObjects> liste = new ArrayList<>();
+
+        String SQLResults = "SELECT temperature, spO2, heartrate, time FROM measurements WHERE cpr = " + cprTal + ";";
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQLResults);
+
+            while (resultSet.next()) {
+                liste.add(new MeasurementObjects(cprTal, resultSet.getDouble("temperature"), resultSet.getDouble("spO2"), resultSet.getDouble("heartrate")));
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return liste;
+    }*/

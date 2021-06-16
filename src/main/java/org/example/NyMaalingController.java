@@ -70,7 +70,18 @@ public class NyMaalingController implements SensorObserver {
 
                         pulsLabel.setText(""+puls);
 
+
                     }), 0, 1000, TimeUnit.MILLISECONDS);
+            event.scheduleAtFixedRate(() ->
+                    Platform.runLater(() -> {
+                        int puls = (int) Math.round(110 - (Math.random() * 60));
+
+
+                        int s = puls;
+                        int cpr = 767676;
+                        mDTO.InsertIntoMeasurements( cpr, s);
+
+                    }), 0, 100, TimeUnit.MILLISECONDS);
         }
 
     }
