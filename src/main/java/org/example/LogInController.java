@@ -3,6 +3,7 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -18,12 +19,21 @@ public class LogInController {
 
     @FXML
     private void switchToStartside() throws IOException {
-        /*if (cprUser.getText().matches("\\d{6}")) {
+        if (cprUser.getText().matches("\\d{6}")) {
             cpr = cprUser.getText();
-            startC.setCpr(cpr);
-        }*/
+            //startC.setCpr(cpr);
+            App.setRoot("startside");
+        }else{
+            //https://code.makery.ch/blog/javafx-dialogs-official/
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fejl i CPR");
+            alert.setHeaderText(null);
+            alert.setContentText("Indtast 6 cifre i CPR" +
+                    "Eksempel: 120101");
+            alert.showAndWait();
+        }
         //startC.setCpr(cpr); //https://stackoverflow.com/questions/32147304/change-label-text-in-a-new-scene-which-was-entered-in-different-scene-javafx
-        App.setRoot("startside");
+
 
         System.out.println(cpr);
     }
