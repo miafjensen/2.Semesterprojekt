@@ -1,37 +1,46 @@
 package org.example;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
 import org.example.Database.measurementObjects;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SeDataController implements Initializable {
 
-
+    @FXML
+    TextField cprField;
     @FXML
     Label cprLabel;
     @FXML
-    TableView tableView;
-    @FXML
-    TextField cprField;
+    private TableView<org.example.mObjects> tableView;
 
+    @FXML
+    private TableColumn<org.example.mObjects, String> idColumn;
+    @FXML
+    private TableColumn<org.example.mObjects, String> maalingColumn;
+    @FXML
+    private TableColumn<org.example.mObjects, String> datoColumn;
+
+    ObservableList<org.example.mObjects> oblist = FXCollections.observableArrayList();
     String cpr;
     int cprSearched;
     LogInController logInController = new LogInController();
-    private static String user;
-    private static String password;
+    private static String user = "root";
+    private static String password = "1234mySQL";
     DBConn dbConn = new DBConn();
     Connection conn = dbConn.getConnectionobject(user, password);
     MeasurementDTO mDTO = new MeasurementDTO(conn);
@@ -53,16 +62,25 @@ public class SeDataController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cprLabel.setText("" + logInController.getCprTal());
-
     }
 
 
     @FXML
-    private void searchByCpr(ActionEvent ae) throws IOException {
+    private void searchByCpr(ActionEvent ae) throws IOException, SQLException {
         if (cprField.getText().matches("\\d{6}")) {
             cpr = cprField.getText();
             cprSearched = Integer.parseInt(cpr);
-            ArrayList<measurementObjects> result = mDTO.FindAllMeasurementResults(cprSearched);
+
+            ResultSet rs = conn.createStatement().executeQuery("SELECT id, Måling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
+
+            while (rs.next()) {
+                oblist.add(new mObjects(rs.getInt("id"), rs.getInt("Måling"), rs.getTimestamp("Dato")));
+            }
+            idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+            maalingColumn.setCellValueFactory(new PropertyValueFactory<>("Måling"));
+            datoColumn.setCellValueFactory(new PropertyValueFactory<>("Dato"));
+
+            tableView.setItems(oblist);
 
         } else {
 
@@ -78,4 +96,32 @@ public class SeDataController implements Initializable {
 
         System.out.println(cpr + "  " + cprSearched);
     }
+
+   /*
+Dynamisk tabel fra: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/comment-page-1/
+ */
+    /*public void buildData(){
+        data = FXCollections.observableArrayList();
+        try{
+            String SQL = "SELECT * from measurements";
+            ResultSet rs = conn.createStatement().executeQuery(SQL);
+            for(int i = 0; i<rs.getMetaData().getColumnCount(); i++){
+                final int j = i;
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i+1));
+                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>(){
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param){
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+                tableView.getColumns().addAll(col);
+                System.out.println("Column[" + i + "] ");
+            }
+            while (rs.next()){
+                ObservableList
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }*/
 }

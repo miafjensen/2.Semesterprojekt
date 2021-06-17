@@ -35,8 +35,8 @@ public class NyMaalingController implements SensorObserver, Initializable {
     - Ting vi skal have med fra denne her : Et kald til en global setCPR metode, gerne inde i MeasurementConn klasse
     for at kunne sætte dem ind automatisk.
      */
-    private static String user;
-    private static String password;
+    private static String user = "root";
+    private static String password = "1234mySQL"; //personligt kodeord
 
     ScheduledExecutorService event;
     public TextField CPRfield;

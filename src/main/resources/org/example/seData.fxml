@@ -12,8 +12,9 @@
       <Button fx:id="logUdButton" layoutX="547.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
       <TableView fx:id="tableView" layoutX="247.0" layoutY="88.0" prefHeight="296.0" prefWidth="324.0">
         <columns>
-          <TableColumn prefWidth="126.66664123535156" text="ID" />
-          <TableColumn prefWidth="140.3333740234375" text="Måling" />
+          <TableColumn fx:id="idColumn" prefWidth="84.66664123535156" text="ID" />
+          <TableColumn fx:id="maalingColumn" prefWidth="106.33334350585938" text="Måling" />
+            <TableColumn fx:id="datoColumn" prefWidth="106.33334350585938" text="Dato" />
         </columns>
       </TableView>
       <SplitMenuButton fx:id="dataSætMenuButton" layoutX="42.0" layoutY="189.0" mnemonicParsing="false" text="Vælg Datasæt">

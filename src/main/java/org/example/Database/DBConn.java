@@ -22,8 +22,7 @@ public class DBConn {
 
 
     public Connection getConnectionobject(String user, String password) {
-        user = "root";
-        password = "1234mySQl"; // personligt kodeord
+
         try{
             Class.forName(JDBC_driver);
             connectionobject = DriverManager.getConnection(DB_url+"?serverTimezone=Eur" +

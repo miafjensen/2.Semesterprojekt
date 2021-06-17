@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class DBTester {
 
-   private static String user;
-   private static String password;
+   private static String user = "root";
+   private static String password = "1234mySQL";
 
     private static Connection connection;
 
@@ -20,8 +20,8 @@ public class DBTester {
 
         // test  indsætning i table
         for (int i = 0; i < 50; i++) {
-            int s = 10 * i;
-            int cpr = 124365;
+            int s = 17 * i;
+            int cpr = 121110;
             cm.InsertIntoMeasurements(cpr, s);
         }
 

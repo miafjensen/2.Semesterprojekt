@@ -111,6 +111,29 @@ public class MeasurementDTO {
         return liste;
     }
 
+    public ArrayList<measurementObjects> FindMålingMeasurementResults(int CPR) {
+        measurementObjects msObject = new measurementObjects();
+        ArrayList liste = new ArrayList();
+
+        String SQLResults = "SELECT Måling FROM measurements WHERE Cpr = " + CPR + ";";
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQLResults);
+
+            while (resultSet.next()) {
+                System.out.println(
+                        "   Måling: " + resultSet.getInt("Måling")
+
+                );
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return liste;
+    }
+
 
 }
 
