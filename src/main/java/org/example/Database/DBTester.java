@@ -21,15 +21,15 @@ public class DBTester {
         // test  indsætning i table
         for (int i = 0; i < 50; i++) {
             int s = 17 * i;
-            int cpr = 121110;
+            int cpr = 654321;
             cm.InsertIntoMeasurements(cpr, s);
         }
 
         //test udtræk fra db
-        /*int cprTal = 767676;
+        int cprTal = 767676;
         ArrayList<measurementObjects> result = cm.FindAllMeasurementResults(cprTal);
         for (measurementObjects r : result) {
-           // System.out.print(" ID " + r.getId() + "   Måling " + r.getMåling() + "   Dato " + r.getDato() + "\n");
-        }*/
+           // System.out.print(" ID " + r.getId() + "   Måling " + r.getMaaling() + "   Dato " + r.getDato() + "\n");
+        }
     }
 }
