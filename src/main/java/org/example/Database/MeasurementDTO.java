@@ -21,10 +21,10 @@ public class MeasurementDTO {
 
     public void createTable() {
         try {
-        String SQLTable = "CREATE TABLE if not exists MeasurementsAgain (\n" +
+        String SQLTable = "CREATE TABLE if not exists measurements (\n" +
                 "                                            id int NOT NULL AUTO_INCREMENT,\n" +
                 "                                            Cpr varchar(6) NOT NULL,\n" +
-                "                                            Måling int NOT NULL,\n" +
+                "                                            maaling int NOT NULL,\n" +
                 "                                            Dato   timestamp default CURRENT_TIMESTAMP null\n" +
                 "                                            PRIMARY KEY (id)\n" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
@@ -44,7 +44,7 @@ public class MeasurementDTO {
 
     public void InsertIntoMeasurements(int value1, int value2) {
         //createTable();
-        String SQLMeasurements = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
+        String SQLMeasurements = "INSERT INTO measurements (Cpr, maaling) VALUES (?,?)";
         //i afprøvning - beskriv at I først kører med en enkelt indsætning og derefter bygger om til batches
         //batches forudsættes at den enkelte værdi kan komme ind- derfor er det vigtigt, at I
         /*
@@ -69,7 +69,7 @@ public class MeasurementDTO {
 
 
     public void InsertIntoMeasurementsArray(int value1, ArrayList<Integer> value2) {
-        String SQLMeasurementsArray = "INSERT INTO measurements (Cpr, Måling) VALUES (?,?)";
+        String SQLMeasurementsArray = "INSERT INTO measurements (Cpr, maaling) VALUES (?,?)";
         try {
             preparedStatement = connection.prepareStatement(SQLMeasurementsArray);
             preparedStatement.setInt(1, value1);
@@ -90,7 +90,7 @@ public class MeasurementDTO {
         measurementObjects msObject = new measurementObjects();
         ArrayList liste = new ArrayList();
 
-        String SQLResults = "SELECT id, Måling, Dato FROM measurements WHERE Cpr = " + CPR + ";";
+        String SQLResults = "SELECT id, maaling, Dato FROM measurements WHERE Cpr = " + CPR + ";";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SQLResults);
@@ -98,31 +98,8 @@ public class MeasurementDTO {
             while (resultSet.next()) {
                 System.out.println(
                         "id: " + resultSet.getInt("id")  +
-                                "   Måling: " + resultSet.getInt("Måling") +
+                                "   Måling: " + resultSet.getInt("maaling") +
                                 "   Dato: " + resultSet.getTimestamp("Dato") + "\n"
-
-                );
-            }
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return liste;
-    }
-
-    public ArrayList<measurementObjects> FindMålingMeasurementResults(int CPR) {
-        measurementObjects msObject = new measurementObjects();
-        ArrayList liste = new ArrayList();
-
-        String SQLResults = "SELECT Måling FROM measurements WHERE Cpr = " + CPR + ";";
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(SQLResults);
-
-            while (resultSet.next()) {
-                System.out.println(
-                        "   Måling: " + resultSet.getInt("Måling")
 
                 );
             }
