@@ -100,6 +100,7 @@ public class MeasurementDTO {
                         "id: " + resultSet.getInt("id")  +
                                 "   Måling: " + resultSet.getInt("Måling") +
                                 "   Dato: " + resultSet.getTimestamp("Dato") + "\n"
+
                 );
             }
 

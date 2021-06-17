@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.SeDataController">
+<AnchorPane prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SeDataController">
    <children>
       <Button fx:id="tilStartsideButton" layoutX="435.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
       <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
@@ -16,13 +16,15 @@
           <TableColumn prefWidth="140.3333740234375" text="Måling" />
         </columns>
       </TableView>
-      <SplitMenuButton fx:id="dataSætMenuButton" layoutX="48.0" layoutY="124.0" mnemonicParsing="false" text="Vælg Datasæt">
+      <SplitMenuButton fx:id="dataSætMenuButton" layoutX="42.0" layoutY="189.0" mnemonicParsing="false" text="Vælg Datasæt">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </SplitMenuButton>
-      <TextField fx:id="cprField" layoutX="36.0" layoutY="63.0" promptText="ex. 121166" />
+      <TextField fx:id="cprField" layoutX="36.0" layoutY="101.0" promptText="ex. 121166" />
+      <Button fx:id="searchButton" defaultButton="true" layoutX="80.0" layoutY="136.0" mnemonicParsing="false" onAction="#searchByCpr" text="Søg" />
+      <Label layoutX="41.0" layoutY="79.0" prefHeight="17.0" prefWidth="115.0" text="Indtast cpr:" />
 
    </children>
    <padding>

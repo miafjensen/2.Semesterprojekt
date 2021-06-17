@@ -7,11 +7,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
-public class LineChartSample extends Application {
+public abstract class LineChartSample extends Application {
     public LineChartSample() {
     }
 
-    public void start(Stage stage) {
+   /* public void start(Stage stage) {
         stage.setTitle("Line Chart Sample");
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -37,7 +37,7 @@ public class LineChartSample extends Application {
         lineChart.getData().add(series);
         stage.setScene(scene);
         stage.show();
-    }
+    }*/
 
     public void main(String[] args) {
 
