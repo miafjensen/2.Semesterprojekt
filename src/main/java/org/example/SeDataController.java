@@ -72,7 +72,7 @@ public class SeDataController implements Initializable {
             cprSearched = Integer.parseInt(cpr);
 
             ResultSet rs = conn.createStatement().executeQuery("SELECT id, maaling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
-
+            //tableView lavet ved hjælp af: https://www.youtube.com/watch?v=LoiQVoNil9Q&ab_channel=RashidIqbal
             while (rs.next()) {
                 oblist.add(new ModelTable(rs.getInt("id"), rs.getInt("maaling"), rs.getTimestamp("Dato")));
             }
