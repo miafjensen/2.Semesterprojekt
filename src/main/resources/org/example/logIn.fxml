@@ -6,7 +6,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LogInController">
    <children>
       <TextField fx:id="cprUser" layoutX="213.0" layoutY="148.0" promptText="CPR" text="123456" />
-      <TextField fx:id="textPassword" accessibleRole="PASSWORD_FIELD" layoutX="213.0" layoutY="187.0" promptText="Kodeord" />
       <Button fx:id="logInButton" defaultButton="true" layoutX="255.0" layoutY="228.0" mnemonicParsing="false" onAction="#switchToStartside" text="Log Ind" />
+      <PasswordField layoutX="213.0" layoutY="188.0" />
    </children>
 </AnchorPane>
