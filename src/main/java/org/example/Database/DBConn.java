@@ -1,5 +1,5 @@
 package org.example.Database;
-// hej der
+
 import java.sql.*;
 
 public class DBConn {
@@ -31,7 +31,7 @@ public class DBConn {
             ex.printStackTrace();
         }
         if(connectionobject!=null){
-            System.out.println("forbindelse til mias db oprettet");
+            System.out.println("forbindelse til din database oprettet");
         }
         return connectionobject;
     }
