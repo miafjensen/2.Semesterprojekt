@@ -2,13 +2,16 @@ package org.example;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SeDataController {
+public class SeDataController implements Initializable {
 
 
     @FXML
@@ -19,24 +22,25 @@ public class SeDataController {
 
     String cpr;
     int cprTal;
-
+    LogInController logInController = new LogInController();
     @FXML
     private void switchToStartside() throws IOException {
         App.setRoot("startside");
     }
 
-    @FXML
-    private void switchToNyMaaling() throws IOException {
-        App.setRoot("nyMaaling");
-    }
 
     @FXML
     private void switchToLogIn() throws IOException {
         App.setRoot("logIn");
     }
 
-    public void setCpr(String cpr) {
-        cprLabel.setText(cpr);
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        cprLabel.setText("" + logInController.getCprTal());
+
     }
 
 
@@ -54,7 +58,6 @@ public class SeDataController {
                     "\nEksempel: 120101");
             alert.showAndWait();
         }
-        //startC.setCpr("" + cprTal); //https://stackoverflow.com/questions/32147304/change-label-text-in-a-new-scene-which-was-entered-in-different-scene-javafx
 
 
         System.out.println(cpr + "  " + cprTal);

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.NyMaalingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.NyMaalingController">
    <children>
        <Button fx:id="tilfojKnap" layoutX="253.0" layoutY="64.0" onAction="#updateGraph" text="tryk paa mig :((("> </Button>
        <Button fx:id="tilStartsideButton" layoutX="435.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
