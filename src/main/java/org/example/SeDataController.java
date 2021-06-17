@@ -26,16 +26,16 @@ public class SeDataController implements Initializable {
     @FXML
     Label cprLabel;
     @FXML
-    private TableView<org.example.mObjects> tableView;
+    private TableView<ModelTable> tableView;
 
     @FXML
-    private TableColumn<org.example.mObjects, String> idColumn;
+    private TableColumn<ModelTable, String> idColumn;
     @FXML
-    private TableColumn<org.example.mObjects, String> maalingColumn;
+    private TableColumn<ModelTable, String> maalingColumn;
     @FXML
-    private TableColumn<org.example.mObjects, String> datoColumn;
+    private TableColumn<ModelTable, String> datoColumn;
 
-    ObservableList<org.example.mObjects> oblist = FXCollections.observableArrayList();
+    ObservableList<ModelTable> oblist = FXCollections.observableArrayList();
     String cpr;
     int cprSearched;
     LogInController logInController = new LogInController();
@@ -74,7 +74,7 @@ public class SeDataController implements Initializable {
             ResultSet rs = conn.createStatement().executeQuery("SELECT id, Måling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
 
             while (rs.next()) {
-                oblist.add(new mObjects(rs.getInt("id"), rs.getInt("Måling"), rs.getTimestamp("Dato")));
+                oblist.add(new ModelTable(rs.getInt("id"), rs.getInt("Måling"), rs.getTimestamp("Dato")));
             }
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             maalingColumn.setCellValueFactory(new PropertyValueFactory<>("Måling"));
