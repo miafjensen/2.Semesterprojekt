@@ -71,13 +71,13 @@ public class SeDataController implements Initializable {
             cpr = cprField.getText();
             cprSearched = Integer.parseInt(cpr);
 
-            ResultSet rs = conn.createStatement().executeQuery("SELECT id, Måling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
+            ResultSet rs = conn.createStatement().executeQuery("SELECT id, maaling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
 
             while (rs.next()) {
-                oblist.add(new ModelTable(rs.getInt("id"), rs.getInt("Måling"), rs.getTimestamp("Dato")));
+                oblist.add(new ModelTable(rs.getInt("id"), rs.getInt("maaling"), rs.getTimestamp("Dato")));
             }
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-            maalingColumn.setCellValueFactory(new PropertyValueFactory<>("Måling"));
+            maalingColumn.setCellValueFactory(new PropertyValueFactory<>("maaling"));
             datoColumn.setCellValueFactory(new PropertyValueFactory<>("Dato"));
 
             tableView.setItems(oblist);

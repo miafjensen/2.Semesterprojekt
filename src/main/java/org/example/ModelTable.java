@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 
 public class ModelTable {
     int id;
-    int Måling;
+    int maaling;
     Timestamp dato;
 
-    public ModelTable(int id, int Måling, Timestamp dato) {
+    public ModelTable(int id, int maaling, Timestamp dato) {
         this.id = id;
-        this.Måling = Måling;
+        this.maaling = maaling;
         this.dato = dato;
     }
 
@@ -21,12 +21,12 @@ public class ModelTable {
         this.id = id;
     }
 
-    public int getMåling(int måling) {
-        return måling;
+    public int getMaaling() {
+        return maaling;
     }
 
-    public void setMåling(int måling) {
-        this.Måling = måling;
+    public void setMaaling(int maaling) {
+        this.maaling = maaling;
     }
 
     public Timestamp getDato() {
