@@ -23,7 +23,6 @@ public class StartsideController implements Initializable {
 
     @FXML
     private void switchToNyMaaling() throws IOException {
-        //App.setRoot();
         App.setRoot("nyMaaling");
     }
 

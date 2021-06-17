@@ -21,8 +21,10 @@ public class SeDataController implements Initializable {
     TextField cprField;
 
     String cpr;
-    int cprTal;
+    int cprSearched;
     LogInController logInController = new LogInController();
+
+
     @FXML
     private void switchToStartside() throws IOException {
         App.setRoot("startside");
@@ -48,8 +50,9 @@ public class SeDataController implements Initializable {
     private void searchByCpr(ActionEvent ae) throws IOException {
         if (cprField.getText().matches("\\d{6}")) {
             cpr = cprField.getText();
-            cprTal = Integer.parseInt(cpr);
+            cprSearched = Integer.parseInt(cpr);
         } else {
+
             //https://code.makery.ch/blog/javafx-dialogs-official/
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl i CPR");
@@ -60,6 +63,6 @@ public class SeDataController implements Initializable {
         }
 
 
-        System.out.println(cpr + "  " + cprTal);
+        System.out.println(cpr + "  " + cprSearched);
     }
 }

@@ -1,8 +1,10 @@
 package org.example;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +13,7 @@ import com.google.common.graph.Graph;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
@@ -24,7 +27,7 @@ import org.example.Sensor.PortDataFilter;
 import org.example.Sensor.SensorObserver;
 
 
-public class NyMaalingController implements SensorObserver {
+public class NyMaalingController implements SensorObserver, Initializable {
 
     /*
     todo: I skal sætte en getText fra jeres tekstfelt - og når brugeren så trykker enter eller tabber væk
@@ -39,6 +42,7 @@ public class NyMaalingController implements SensorObserver {
     public TextField CPRfield;
     boolean control = true;
     String cpr;
+
     @FXML
     //AVoid making uncasted object Initialises
     LineChart<String, Integer> GraphArea;
@@ -57,16 +61,14 @@ public class NyMaalingController implements SensorObserver {
     @FXML
     Label cprLabel;
 
+    LogInController logInController = new LogInController();
 
 
-
-
-    /*public int[] getSensorData(){
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        cprLabel.setText("" + logInController.getCprTal());
+        //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
     }
-
-     */
-
 
     public void updateGraph(int[] input) {
         dataseries.setName("hestenet");
@@ -123,8 +125,6 @@ public class NyMaalingController implements SensorObserver {
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
                         int puls = (int) Math.round(110 - (Math.random() * 60));
-
-                        //int cprTal = Integer.parseInt(cpr);
 
                         pulsLabel.setText("" + puls);
 
