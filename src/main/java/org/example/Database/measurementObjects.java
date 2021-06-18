@@ -3,7 +3,7 @@ package org.example.Database;
 import java.sql.Timestamp;
 
 public class measurementObjects {
-
+/*
 
     private Timestamp Dato;
     private int Cpr, maaling, Id;
@@ -27,5 +27,5 @@ public class measurementObjects {
 
     public int getId() {return Id;}
 
-    public Timestamp getDato() { return Dato; }
+    public Timestamp getDato() { return Dato; }*/
 }

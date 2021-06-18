@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class DBTester {
 
-   private static String user = "root";
-   private static String password = "1234mySQL";
+  private static String user;
+  private static String password;
 
     private static Connection connection;
 
@@ -20,13 +20,13 @@ public class DBTester {
 
         // test  indsætning i table
         for (int i = 0; i < 50; i++) {
-            int s = 17 * i;
-            int cpr = 654321;
+            int s = (int)(Math.random()*4095);
+            int cpr = 161198;
             cm.InsertIntoMeasurements(cpr, s);
         }
 
         //test udtræk fra db
-        int cprTal = 767676;
+        int cprTal = 161198;
         ArrayList<measurementObjects> result = cm.FindAllMeasurementResults(cprTal);
         for (measurementObjects r : result) {
            // System.out.print(" ID " + r.getId() + "   Måling " + r.getMaaling() + "   Dato " + r.getDato() + "\n");

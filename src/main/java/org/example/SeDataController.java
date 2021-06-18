@@ -39,8 +39,8 @@ public class SeDataController implements Initializable {
     String cpr;
     int cprSearched;
     LogInController logInController = new LogInController();
-    private static String user = "root";
-    private static String password = "1234mySQL";
+    private static String user;
+    private static String password; //ret personligt kodeord i DBConn klassen line 29
     DBConn dbConn = new DBConn();
     Connection conn = dbConn.getConnectionobject(user, password);
     MeasurementDTO mDTO = new MeasurementDTO(conn);

@@ -7,8 +7,8 @@ import java.sql.*;
 public class DBConn {
     private  Connection connectionobject;
     String DB_url = "jdbc:mysql://localhost:3306/semesterprojekt2";
-    String user = "root";
-    String password = "1234mySQL"; // personligt kodeord
+    //String user = "root";
+    //String password = "1234mySQL"; // personligt kodeord
     private String JDBC_driver = "com.mysql.cj.jdbc.Driver";
 
     //status fra William - jeres Connection er oprettet, I manglede lige et par dependencies fra Maven
@@ -26,17 +26,18 @@ public class DBConn {
         try{
             Class.forName(JDBC_driver);
             connectionobject = DriverManager.getConnection(DB_url+"?serverTimezone=Eur" +
-                    "ope/Amsterdam&amp", user, password);
+                    "ope/Amsterdam&amp", "root", "1234mySQL");
 
 
         }catch (SQLException | ClassNotFoundException ex){
             ex.printStackTrace();
-            System.out.println("Tjek om password og DB_url er den rigtige til din database i DBConn klassen");
+            System.out.println("Tjek om password og DB_url er den rigtige til din database i DBConn klassen, henholdvis linje 29 og 9");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl i forbindelse til Database");
             alert.setHeaderText("IKKE FORBUNDET TIL DATABASE");
             alert.setContentText("Tjek om password og DB_url er den " +
-                    "\nrigtige til din database i DBConn klassen");
+                    "\nrigtige til din database i DBConn klassen" +
+                    "\nhenholdsvis linje 29 og 9.");
             alert.showAndWait();
         }
         if(connectionobject!=null){
