@@ -9,7 +9,44 @@ public class PortDataFilter {
 
     public static String buffer = "";
 
-    public int[] dataFilter() {
+    public String[] dataString() {
+        String[] dataStr = new String[10];
+
+        ConnectionEKG connEKG = new ConnectionEKG();
+
+
+            try {
+                for (int s = 0; s < dataStr.length ; s++){
+
+                    String data = connEKG.readData();
+                    //System.out.println("data: " + data);
+
+                    if (data != null) {
+                        buffer = buffer + data;
+                    }
+
+                    String[] tempLib = buffer.split("\\s+");
+                    tempLib[s] = CharMatcher.inRange('0', '9').or(CharMatcher.whitespace()).retainFrom(tempLib[s]);
+                    // beholder kun tegn der matcher 0-9 og mellemrum, og sorterer alt andet fra
+                    //lånt fra https://guava.dev/releases/21.0/api/docs/com/google/common/base/CharMatcher.html
+                    dataStr[s] = tempLib[s];
+                    //10 pladser.
+                    //System.out.println("t: " + dataStr[s]);
+
+
+                }
+                Thread.sleep(200);
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+
+            return dataStr;
+
+    }
+
+    /*public int[] dataFilter() {
         int[] dataLib = new int[50];
 
         ConnectionEKG connEKG = new ConnectionEKG();
@@ -57,5 +94,5 @@ public class PortDataFilter {
 
             return dataLib;
         }
-    }
+    }*/
 }

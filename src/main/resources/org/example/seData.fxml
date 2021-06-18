@@ -10,19 +10,13 @@
       <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
       <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
       <Button fx:id="logUdButton" layoutX="547.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
-      <TableView fx:id="tableView" layoutX="247.0" layoutY="88.0" prefHeight="296.0" prefWidth="324.0">
+      <TableView fx:id="tableView" layoutX="215.0" layoutY="88.0" prefHeight="367.0" prefWidth="395.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="84.66664123535156" text="ID" />
-          <TableColumn fx:id="maalingColumn" prefWidth="106.33334350585938" text="Måling" />
-            <TableColumn fx:id="datoColumn" prefWidth="106.33334350585938" text="Dato" />
+          <TableColumn fx:id="maalingColumn" prefWidth="114.66665649414062" text="Måling" />
+            <TableColumn fx:id="datoColumn" prefWidth="180.00003051757812" text="Dato" />
         </columns>
       </TableView>
-      <SplitMenuButton fx:id="dataSætMenuButton" layoutX="42.0" layoutY="189.0" mnemonicParsing="false" text="Vælg Datasæt">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </SplitMenuButton>
       <TextField fx:id="cprField" layoutX="36.0" layoutY="101.0" promptText="ex. 121166" />
       <Button fx:id="searchButton" defaultButton="true" layoutX="80.0" layoutY="136.0" mnemonicParsing="false" onAction="#searchByCpr" text="Søg" />
       <Label layoutX="41.0" layoutY="79.0" prefHeight="17.0" prefWidth="115.0" text="Indtast cpr:" />

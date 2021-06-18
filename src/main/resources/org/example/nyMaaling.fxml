@@ -13,7 +13,7 @@
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="yAkse" side="LEFT" label="mV *10^6"  autoRanging="true"/>
         </yAxis>
       </LineChart>
       <Label layoutX="39.0" layoutY="76.0" text="Puls" />

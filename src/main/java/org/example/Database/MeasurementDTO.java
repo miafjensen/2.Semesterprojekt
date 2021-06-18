@@ -21,19 +21,18 @@ public class MeasurementDTO {
 
     public void createTable() {
         try {
-        String SQLTable = "CREATE TABLE if not exists measurements (\n" +
-                "                                            id int NOT NULL AUTO_INCREMENT,\n" +
-                "                                            Cpr varchar(6) NOT NULL,\n" +
-                "                                            maaling int NOT NULL,\n" +
-                "                                            Dato   timestamp default CURRENT_TIMESTAMP null\n" +
-                "                                            PRIMARY KEY (id)\n" +
-                ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+            String SQLTable = "create table if not exists measurements\n" +
+                    "(\n" +
+                    "    id      int auto_increment\n" +
+                    "        primary key,\n" +
+                    "    Cpr     varchar(6)                          not null,\n" +
+                    "    maaling text                                 not null,\n" +
+                    "    Dato    timestamp default CURRENT_TIMESTAMP null\n" +
+                    ");";
 
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
 
-            //preparedStatement = connection.prepareStatement(SQLTable);
-            //preparedStatement.execute();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -55,9 +54,6 @@ public class MeasurementDTO {
             preparedStatement.setInt(1, value1);
             preparedStatement.setInt(2, value2);
             preparedStatement.execute();
-            //kan den bruges til at udføre større opdateringer? fx. med 1000 målinger? 2000?
-            //kig på execute batch updates i MySQL.
-
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -65,19 +61,20 @@ public class MeasurementDTO {
     }
 
 
-
-
-
-    public void InsertIntoMeasurementsArray(int value1, ArrayList<Integer> value2) {
+    public void InsertIntoMeasurementsArray(int value1, String[] value2) {
         String SQLMeasurementsArray = "INSERT INTO measurements (Cpr, maaling) VALUES (?,?)";
         try {
             preparedStatement = connection.prepareStatement(SQLMeasurementsArray);
-            preparedStatement.setInt(1, value1);
-            preparedStatement.setArray(2, (Array) value2);
-            preparedStatement.execute();
-            //kan den bruges til at udføre større opdateringer? fx. med 1000 målinger? 2000?
-            //kig på execute batch updates i MySQL.
-
+            for (int i = 0; i < value2.length; i++) {
+                preparedStatement.setInt(1, value1);
+                preparedStatement.setString(2, value2 [i]);
+                //preparedStatement.execute();
+                //kan den bruges til at udføre større opdateringer? fx. med 1000 målinger? 2000?
+                //kig på execute batch updates i MySQL.
+                preparedStatement.addBatch();
+                System.out.println("i =" + i);
+            }
+            preparedStatement.executeBatch();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -97,7 +94,7 @@ public class MeasurementDTO {
 
             while (resultSet.next()) {
                 System.out.println(
-                        "id: " + resultSet.getInt("id")  +
+                        "id: " + resultSet.getInt("id") +
                                 "   Måling: " + resultSet.getInt("maaling") +
                                 "   Dato: " + resultSet.getTimestamp("Dato") + "\n"
 
