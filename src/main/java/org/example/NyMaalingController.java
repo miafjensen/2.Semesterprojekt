@@ -71,7 +71,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     }
 
     public void updateGraph(int[] input) {
-        dataseries.setName("hestenet");
+        dataseries.setName("EKG");
 
         Thread taskThread = new Thread(new Runnable() {
             @Override

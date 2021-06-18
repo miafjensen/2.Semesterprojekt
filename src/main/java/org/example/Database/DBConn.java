@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class DBConn {
     private  Connection connectionobject;
-    String DB_url = "jdbc:mysql://localhost:3306/semesterprojekt2";
+    String DB_url = "jdbc:mysql://localhost:3306/Semesterprojekt2";
     //String user = "root";
     //String password = "1234mySQL"; // personligt kodeord
     private String JDBC_driver = "com.mysql.cj.jdbc.Driver";
@@ -26,7 +26,7 @@ public class DBConn {
         try{
             Class.forName(JDBC_driver);
             connectionobject = DriverManager.getConnection(DB_url+"?serverTimezone=Eur" +
-                    "ope/Amsterdam&amp", "root", "1234mySQL");
+                    "ope/Amsterdam&amp", "root", "Emmeb.10");
 
 
         }catch (SQLException | ClassNotFoundException ex){
