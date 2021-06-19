@@ -1,9 +1,9 @@
 package org.example.Database;
 
-import org.example.MeasurementObjects;
 
 import java.sql.*;
 import java.util.ArrayList;
+import org.example.MeasurementObjects;
 
 public class MeasurementDTO {
 
@@ -11,6 +11,7 @@ public class MeasurementDTO {
     private Statement statement;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
+
 
     public MeasurementDTO(Connection connection) {
         this.connection = connection;
@@ -45,7 +46,7 @@ public class MeasurementDTO {
         }
     }
 
-    // Indsætning af flere større mængder på en gang ved brug af batch
+    // Indsætning af større mængder data på en gang ved brug af batch
     public void InsertIntoMeasurementsArray(int value1, String[] value2) {
         String SQLMeasurementsArray = "INSERT INTO measurements (Cpr, maaling) VALUES (?,?)";
         try {
