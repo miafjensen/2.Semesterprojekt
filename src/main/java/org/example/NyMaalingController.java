@@ -3,6 +3,7 @@ package org.example;
 import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -109,7 +110,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
                         int puls = (int) Math.round(110 - (Math.random() * 60));
-
                         pulsLabel.setText("" + puls);
 
                     }), 0, 1000, TimeUnit.MILLISECONDS);
@@ -130,10 +130,18 @@ public class NyMaalingController implements SensorObserver, Initializable {
                     Platform.runLater(() -> {
 
                         for (String[] indhold : placeholder) {
-                            mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
+                            try {
+                                mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                System.out.println("fejl i insert");
+                            }
+
                         }
                         placeholder.clear();
-                    }), 1000, 8000, TimeUnit.MILLISECONDS);
+
+                        System.out.println("sendt til db");
+                    }), 1000, 5000, TimeUnit.MILLISECONDS);
         }
 
     }
@@ -177,7 +185,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
     @Override
     public void notify(ConnectionEKG connectionEKG) {
         placeholder.add(connectionEKG.getSplitData());
-
         //bruger materiale fra ConnectionEKG
 
     }

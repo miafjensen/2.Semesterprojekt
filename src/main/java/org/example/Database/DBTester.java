@@ -27,22 +27,22 @@ public class DBTester {
         }*/
 
         // test  indsætning i table med batch
-
         String[] data = new String[20];
         for (int i = 0; i < data.length; i++) {
             int s = (int) (Math.random() * 4095);
             data[i] = ""+ s;
         }
         int cpr = 123456;
-        cm.InsertIntoMeasurementsArray(cpr, data);
+       // cm.InsertIntoMeasurementsArray(cpr, data);
 
 
         //test udtræk fra db
         int cprTal = 161198;
-        ArrayList<MeasurementObjects> result = cm.FindAllMeasurementResults(cprTal);
-        for (MeasurementObjects r : result) {
-            // System.out.print(" ID " + r.getId() + "   Måling " + r.getMaaling() + "   Dato " + r.getDato() + "\n");
-        }
+
+        //cm.FindAllMeasurementResults(cprTal);
+
+        //test af create teble
+        cm.createTable();
     }
 }
 

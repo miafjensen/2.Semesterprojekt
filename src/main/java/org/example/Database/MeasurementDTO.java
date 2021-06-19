@@ -13,22 +13,18 @@ public class MeasurementDTO {
 
     public MeasurementDTO(Connection connection) {
         this.connection = connection;
-        /*createTable();*/
+        createTable();
+        // opretter automatisk table når der oprettes forbindelse til sql,
+        // hvis den ikke allerede eksisterer i databasen
     }
 
-    // virker ikke, ved ikke hvorfor...
     public void createTable() {
         try {
-            String SQLTable = "create table if not exists measurements\n" +
-                    "(\n" +
-                    "    id      int auto_increment\n" +
-                    "        primary key,\n" +
-                    "    Cpr     varchar(6)                          not null,\n" +
-                    "    maaling text                                 not null,\n" +
-                    "    Dato    timestamp default CURRENT_TIMESTAMP null\n" +
-                    ");";
+            String SQLTable = "create table if not exists measurements ( id int auto_increment primary key," +
+            "Cpr varchar(6) not null, maaling text not null, Dato timestamp default CURRENT_TIMESTAMP null);";
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
+            System.out.println("table oprettet");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

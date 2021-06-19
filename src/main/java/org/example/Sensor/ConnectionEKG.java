@@ -24,9 +24,12 @@ public class ConnectionEKG implements SensorObservable {
         int EKGPort = -1;        //finder port hvor sensor er sat til
         for (int n = 0; n < porte.length; n++) {
             SerialPort port = porte[n];
-            if (port.getPortDescription().equals("USBSER000"))
-                //USBSER000 er navnet på sensor, som der søges efter ved port gennemgang.
-                EKGPort = n;
+            if (port.getPortDescription().equals("USBSER001")){
+                //USBSER001 er navnet på sensor, som der søges efter ved port gennemgang.
+                EKGPort = n;}
+            if (port.getPortDescription().equals("USBSER000")){
+                //USBSER001 er navnet på sensor, som der søges efter ved port gennemgang.
+                EKGPort = n;}
         }
 
         if (EKGPort != -1) {
