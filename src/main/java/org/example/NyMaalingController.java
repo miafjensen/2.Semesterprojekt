@@ -26,13 +26,10 @@ import org.example.Sensor.SensorObserver;
 
 public class NyMaalingController implements SensorObserver, Initializable {
 
-
-    private static String user;
-    private static String password; //ret personligt kodeord i DBConn klassen line 29
     ScheduledExecutorService event;
     boolean control = true;
     DBConn dbConn = new DBConn();
-    Connection conn = dbConn.getConnectionobject(user, password);
+    Connection conn = dbConn.getConnectionobject();
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     LogInController logInController = new LogInController();
     

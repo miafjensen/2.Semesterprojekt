@@ -6,34 +6,29 @@ import java.sql.*;
 
 public class DBConn {
     private  Connection connectionobject;
-    String DB_url = "jdbc:mysql://localhost:3306/semesterprojekt2";
+    String schema = "Semesterprojekt2"; //kan være forskellige på tværs af databaser
+    String DB_url = "jdbc:mysql://localhost:3306/" + schema;
     private String JDBC_driver = "com.mysql.cj.jdbc.Driver";
 
-    //status fra William - jeres Connection er oprettet, I manglede lige et par dependencies fra Maven
-    /*
-    Derudover skulle I lige have lidt hjælp til syntaxen med at oprette forbindelse -
-    Forslag - skriv i jeres afprøvningsafsnit at for at teste jeres forbindelse, har I sat en "If" struktur
-    ind for at teste om forbindelsen er != null. Heraf kan I bygge videre med preparedStatements til inds
-    at sætte ind og Statements til at finde dem igen.
-     */
-
-
-    public Connection getConnectionobject(String user, String password) {
+    public Connection getConnectionobject() {
 
         try{
             Class.forName(JDBC_driver);
+            String user = "root";
+            String password = "1234mySQL";
             connectionobject = DriverManager.getConnection(DB_url+"?serverTimezone=Eur" +
-                    "ope/Amsterdam&amp", "root", "1234mySQL");
+                    "ope/Amsterdam&amp", user, password);
+
 
         }catch (SQLException | ClassNotFoundException ex){
             ex.printStackTrace();
-            System.out.println("Tjek om password og DB_url er den rigtige til din database i DBConn klassen, henholdvis linje 29 og 9");
+            System.out.println("Tjek om schema, user og password er det rigtige til din database i DBConn klassen, henholdvis linje 9, 17 og 18");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl i forbindelse til Database");
             alert.setHeaderText("IKKE FORBUNDET TIL DATABASE");
-            alert.setContentText("Tjek om password og DB_url er den " +
-                    "\nrigtige til din database i DBConn klassen" +
-                    "\nhenholdsvis linje 29 og 9.");
+            alert.setContentText("Tjek om schema, user og password er det rigtige"
+                    + "\ntil din database i DBConn klassen, "
+                    + "\nhenholdvis linje 9, 17 og 18");
             alert.showAndWait();
         }
         if(connectionobject!=null){
