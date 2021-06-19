@@ -1,6 +1,7 @@
 package org.example.Database;
 
 import org.example.MeasurementObjects;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class MeasurementDTO {
     public void createTable() {
         try {
             String SQLTable = "create table if not exists measurements ( id int auto_increment primary key," +
-            "Cpr varchar(6) not null, maaling text not null, Dato timestamp default CURRENT_TIMESTAMP null);";
+                    "Cpr varchar(6) not null, maaling text not null, Dato timestamp default CURRENT_TIMESTAMP null);";
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
             System.out.println("table oprettet");
@@ -51,9 +52,8 @@ public class MeasurementDTO {
             preparedStatement = connection.prepareStatement(SQLMeasurementsArray);
             for (int i = 0; i < value2.length; i++) {
                 preparedStatement.setInt(1, value1);
-                preparedStatement.setString(2, value2 [i]);
+                preparedStatement.setString(2, value2[i]);
                 preparedStatement.addBatch();
-                System.out.println("i =" + i);
             }
             preparedStatement.executeBatch();
         } catch (SQLException throwables) {

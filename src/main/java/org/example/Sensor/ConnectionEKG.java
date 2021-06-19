@@ -24,12 +24,14 @@ public class ConnectionEKG implements SensorObservable {
         int EKGPort = -1;        //finder port hvor sensor er sat til
         for (int n = 0; n < porte.length; n++) {
             SerialPort port = porte[n];
-            if (port.getPortDescription().equals("USBSER001")){
+            if (port.getPortDescription().equals("USBSER001")) {
                 //USBSER001 er navnet på sensor, som der søges efter ved port gennemgang.
-                EKGPort = n;}
-            if (port.getPortDescription().equals("USBSER000")){
+                EKGPort = n;
+            }
+            if (port.getPortDescription().equals("USBSER000")) {
                 //USBSER001 er navnet på sensor, som der søges efter ved port gennemgang.
-                EKGPort = n;}
+                EKGPort = n;
+            }
         }
 
         if (EKGPort != -1) {
@@ -51,31 +53,29 @@ public class ConnectionEKG implements SensorObservable {
 
                 @Override
                 public void serialEvent(SerialPortEvent serialPortEvent) {
-                  //  if(serialPortEvent.getEventType()!= SerialPort.LISTENING_EVENT_DATA_AVAILABLE){
-                       // System.out.println(port.bytesAvailable());
-                       // return;
+                    //  if(serialPortEvent.getEventType()!= SerialPort.LISTENING_EVENT_DATA_AVAILABLE){
+                    // System.out.println(port.bytesAvailable());
+                    // return;
                     //}
-                //byte[] buffer = new byte[port.bytesAvailable()];
-                  //  int antalByteLæst = port.readBytes(buffer, buffer.length);
+                    //byte[] buffer = new byte[port.bytesAvailable()];
+                    //  int antalByteLæst = port.readBytes(buffer, buffer.length);
                     //System.out.print(new String(buffer));
                 }
             });
-           // port.addDataListener();
+            // port.addDataListener();
             serialPort = port;
         }
     }
 
 
-
-
-    private String readFromPort(){
+    private String readFromPort() {
         byte[] buffer = new byte[serialPort.bytesAvailable()];
         int antalByteLaest = serialPort.readBytes(buffer, buffer.length);
         input = new String(buffer, 0, antalByteLaest);
         return input;
     }
 
-    public String[] getSplitData(){
+    public String[] getSplitData() {
 
         String material = readFromPort();
 
@@ -83,20 +83,19 @@ public class ConnectionEKG implements SensorObservable {
         //https://stackoverflow.com/questions/13750716/what-does-regular-expression-s-s-do
         //bruges til at undgå whitespaces.
 
-        for (String indholdISPlittet : splittet){
+        for (String indholdISPlittet : splittet) {
             indholdISPlittet = CharMatcher.inRange('0', '9').or(CharMatcher.whitespace()).retainFrom(indholdISPlittet);
             // beholder kun tegn der matcher 0-9 og mellemrum, og sorterer alt andet fra
             //lånt fra https://guava.dev/releases/21.0/api/docs/com/google/common/base/CharMatcher.html
-
-        }
-    splitData = splittet;
+            }
+        splitData = splittet;
         //fungerer lidt som tidligere men er mere samlet.
         return splitData;
     }
 
     public ArrayList<Integer> getDataArrayList() {
         //Når denne her kaldes
-        for (String string :splitData){
+        for (String string : splitData) {
             //kører det splittede data igennem
             dataArrayList.add(Integer.parseInt(string));
             //konverterer indhold i array til int, og tilføjes til arrayList plads for plads
@@ -105,6 +104,7 @@ public class ConnectionEKG implements SensorObservable {
     }
 
     ArrayList<SensorObserver> observers = new ArrayList<>();
+
     @Override
     public void registerObserver(SensorObserver sensorObserver) {
         observers.add(sensorObserver);
@@ -116,11 +116,11 @@ public class ConnectionEKG implements SensorObservable {
     @Override
     public void run() {
 
-        while(true){
+        while (true) {
 
-           for(SensorObserver x :observers){
-               x.notify(this);
-           }
+            for (SensorObserver x : observers) {
+                x.notify(this);
+            }
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {

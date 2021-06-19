@@ -35,7 +35,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     Connection conn = dbConn.getConnectionobject(user, password);
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     LogInController logInController = new LogInController();
-    Scanner sc = new Scanner(System.in);
+    
 
     @FXML
     //Avoid making uncasted object Initialises
@@ -132,7 +132,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
                         for (String[] indhold : placeholder) {
                             try {
                                 mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 System.out.println("fejl i insert");
                             }
