@@ -4,24 +4,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.NyMaalingController">
-   <children>
-       <Button fx:id="tilfojKnap" layoutX="253.0" layoutY="64.0" onAction="#updateGraph" text="tryk paa mig :((("> </Button>
-       <Button fx:id="tilStartsideButton" layoutX="435.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
-      <LineChart fx:id="GraphArea" layoutX="27.0" layoutY="118.0" prefHeight="333.0" prefWidth="510.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yAkse" side="LEFT" label="mV *10^6"  autoRanging="true"/>
-        </yAxis>
-      </LineChart>
-      <Label layoutX="39.0" layoutY="76.0" text="Puls" />
-      <Label id="pulsdata" fx:id="pulsLabel" layoutX="88.0" layoutY="76.0" prefHeight="17.0" prefWidth="24.0" text="---" />
-       <Button fx:id="logUdButton" layoutX="540.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
-       <Button fx:id="StartMålingButton" layoutX="253.0" layoutY="29.0" mnemonicParsing="false" onAction="#startMaaling" text="Start Måling" />
-       <Button fx:id="StopMålingButton" layoutX="342.0" layoutY="29.0" mnemonicParsing="false" onAction="#stop" text="Stop Måling" />
-      <Label fx:id="CPR" layoutX="36.0" layoutY="33.0" text="CPR:" />
-      <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0"
+            prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.NyMaalingController">
+    <children>
+        <Button fx:id="tilfojKnap" layoutX="253.0" layoutY="64.0" onAction="#updateGraph"
+                text="Graf simulering"></Button>
+        <Button fx:id="tilStartsideButton" layoutX="435.0" layoutY="29.0" mnemonicParsing="false"
+                onAction="#switchToStartside" text="Tilbage til start "/>
+        <LineChart fx:id="GraphArea" layoutX="27.0" layoutY="118.0" prefHeight="333.0" prefWidth="510.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAkse" autoRanging="true" label="mV" side="LEFT"/>
+            </yAxis>
+        </LineChart>
+        <Label layoutX="39.0" layoutY="76.0" text="Puls"/>
+        <Label id="pulsdata" fx:id="pulsLabel" layoutX="88.0" layoutY="76.0" prefHeight="17.0" prefWidth="24.0"
+               text="---"/>
+        <Button fx:id="logUdButton" layoutX="540.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn"
+                text="Log Ud"/>
+        <Button fx:id="StartMålingButton" defaultButton="true" layoutX="253.0" layoutY="29.0" mnemonicParsing="false"
+                onAction="#startMaaling" text="Start Måling"/>
+        <Button fx:id="StopMålingButton" layoutX="342.0" layoutY="29.0" mnemonicParsing="false" onAction="#stopMaaling"
+                text="Stop Måling"/>
+        <Label fx:id="CPR" layoutX="36.0" layoutY="33.0" text="CPR:"/>
+        <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---"/>
+    </children>
 </AnchorPane>

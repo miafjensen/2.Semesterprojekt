@@ -4,30 +4,22 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.graph.Graph;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
-import org.example.Database.measurementObjects;
 import org.example.Sensor.ConnectionEKG;
-import org.example.Sensor.PortDataFilter;
 import org.example.Sensor.SensorObserver;
 
 
@@ -41,15 +33,14 @@ public class NyMaalingController implements SensorObserver, Initializable {
     DBConn dbConn = new DBConn();
     Connection conn = dbConn.getConnectionobject(user, password);
     MeasurementDTO mDTO = new MeasurementDTO(conn);
-    measurementObjects mObjects = new measurementObjects();
     LogInController logInController = new LogInController();
     Scanner sc = new Scanner(System.in);
 
     @FXML
-    //AVoid making uncasted object Initialises
+    //Avoid making uncasted object Initialises
     LineChart<String, Integer> GraphArea;
     XYChart.Series<String, Integer> dataseries = new XYChart.Series();
-//vi kan også bruge <String,Integer> hvis vi skriver ""+index
+    //vi kan også bruge <String,Integer> hvis vi skriver "" +index
 
     @FXML
     Label pulsLabel;
@@ -68,13 +59,8 @@ public class NyMaalingController implements SensorObserver, Initializable {
     // henter og viser cpr fra LogIn på cprLabel
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cprLabel.setText("" + logInController.getCprTal());
-
-        ConnectionEKG connectionEKG = new ConnectionEKG();
-
-        connectionEKG.registerObserver(this);
-        new Thread(connectionEKG);
         //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
+        cprLabel.setText("" + logInController.getCprTal());
     }
 
     public void updateGraph(int[] input) {
@@ -83,7 +69,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
         Thread taskThread = new Thread(new Runnable() {
             @Override
             public void run() {
-
 
                 Platform.runLater(new Runnable() {
                     @Override
@@ -96,18 +81,14 @@ public class NyMaalingController implements SensorObserver, Initializable {
 
                             //Fejlen ligger her - skal vi rette LineCHart til en
 
-                            // System.out.println("hejsaaaa :)");
                         }
                         GraphArea.getData().removeAll();
                         GraphArea.getData().add(dataseries);
                     }
                 });
-
             }
         });
-
         taskThread.start();
-        //
     }
 
     @FXML
@@ -127,35 +108,29 @@ public class NyMaalingController implements SensorObserver, Initializable {
             control = false;
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
-                       // int puls = (int) Math.round(110 - (Math.random() * 60));
+                        int puls = (int) Math.round(110 - (Math.random() * 60));
 
-                       // pulsLabel.setText("" + puls);
+                        pulsLabel.setText("" + puls);
 
                     }), 0, 1000, TimeUnit.MILLISECONDS);
+
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
-
                         try {
                             for (int index : generateData()) {
                                 // System.out.println(index);
-
                             }
                             updateGraph(generateData());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-
-
                     }), 0, 15000, TimeUnit.MILLISECONDS);
 
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
-                        int puls = (int) Math.round(110 - (Math.random() * 60));
 
-                        pulsLabel.setText("" + puls);
-                        for(String[] indhold:placeholder){
-                            mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()),indhold);
+                        for (String[] indhold : placeholder) {
+                            mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
                         }
                         placeholder.clear();
                     }), 1000, 8000, TimeUnit.MILLISECONDS);
@@ -164,7 +139,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     }
 
     @FXML
-    private void stop(ActionEvent actionEvent) {
+    private void stopMaaling(ActionEvent actionEvent) {
         event.shutdown();
         control = true;
     }
@@ -178,16 +153,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
         App.setRoot("logIn");
     }
 
-  /*
-    @Override
-    public void notify(PortDataFilter portDataFilter) {
-        System.out.println(portDataFilter.dataString());
-        *//* kald til klasse og constructor i PortDataFilter
-         *//*
-
-    }*/
-
-
 
     public void updateGraph(ActionEvent actionEvent) throws IOException {
 
@@ -199,7 +164,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
         updateGraph(generateData());
     }
 
-   private int[] generateData() throws IOException {
+    private int[] generateData() throws IOException {
         int[] data = new int[15];
         for (int i = 0; i < data.length; i++) {
             data[i] = (int) (Math.random() * 100);
@@ -207,19 +172,15 @@ public class NyMaalingController implements SensorObserver, Initializable {
         return data;
     }
 
-    ArrayList<String[]> placeholder = new ArrayList<String []>();//buffer til String arrays
+    ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays
+
     @Override
     public void notify(ConnectionEKG connectionEKG) {
-        placeholder.add(connectionEKG.getSplittedData());
-
-
-
-
+        placeholder.add(connectionEKG.getSplitData());
 
         //bruger materiale fra ConnectionEKG
 
     }
-
 
     /*private int[] generateData() throws IOException {
         int[] data = new int[35];

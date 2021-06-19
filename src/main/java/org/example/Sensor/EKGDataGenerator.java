@@ -2,7 +2,7 @@ package org.example.Sensor;
 
 import java.util.ArrayList;
 
-public class EKGDataGenerator implements SensorObservable{
+public abstract class EKGDataGenerator implements SensorObservable{
 
     //private ArrayList<PortDataFilter>
 
@@ -13,7 +13,7 @@ public class EKGDataGenerator implements SensorObservable{
 
     @Override
     public void run() {
-        PortDataFilter EKGDTO = new PortDataFilter();
+
         while (true){
 
 

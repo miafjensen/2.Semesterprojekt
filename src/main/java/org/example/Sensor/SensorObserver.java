@@ -1,7 +1,7 @@
 package org.example.Sensor;
 
 public interface SensorObserver {
-
+    // observerer ConnectionEKG, hvor data fra sensor kommer ind
     public void notify(ConnectionEKG connectionEKG);
-    //det giver man til en, som skal observere, fx en sensor
+
 }

@@ -2,12 +2,12 @@ package org.example;
 
 import java.sql.Timestamp;
 
-public class ModelTable {
+public class MeasurementObjects {
     int id;
-    int maaling;
+    String maaling;
     Timestamp dato;
 
-    public ModelTable(int id, int maaling, Timestamp dato) {
+    public MeasurementObjects(int id, String maaling, Timestamp dato) {
         this.id = id;
         this.maaling = maaling;
         this.dato = dato;
@@ -21,11 +21,11 @@ public class ModelTable {
         this.id = id;
     }
 
-    public int getMaaling() {
+    public String getMaaling() {
         return maaling;
     }
 
-    public void setMaaling(int maaling) {
+    public void setMaaling(String maaling) {
         this.maaling = maaling;
     }
 

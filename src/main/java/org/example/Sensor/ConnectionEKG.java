@@ -12,27 +12,29 @@ public class ConnectionEKG implements SensorObservable {
 //her hentes data
 
     private SerialPort serialPort;
+    private ArrayList<Integer> dataArrayList = new ArrayList<>();
+    private String[] splitData;
+    private String input = "";
 
     public ConnectionEKG() {
-        //Klasse til at håndtere serielporte, filtrere data, og returnere dem.
+        //Klasse til at håndtere serielport, filtrere data, og returnere dem.
 
         SerialPort[] porte = SerialPort.getCommPorts();
 
-        int EKGPort = -1;        //finder port hvor temperaur sensor er sat til
+        int EKGPort = -1;        //finder port hvor sensor er sat til
         for (int n = 0; n < porte.length; n++) {
             SerialPort port = porte[n];
             if (port.getPortDescription().equals("USBSER000"))
-                //USB-Serial Controller D er navnet på sensor, som der søges efter ved port gennemgang
+                //USBSER000 er navnet på sensor, som der søges efter ved port gennemgang.
                 EKGPort = n;
         }
 
         if (EKGPort != -1) {
             SerialPort port = porte[EKGPort];
 
-            port.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 10, 0); // port tjekk
+            port.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 10, 0); // port tjekes hvert 10. ms
             port.openPort();
-            port.setBaudRate(38400);
-            //højere baudrate fungerer ikke
+            port.setBaudRate(38400); //denne baudrate fungerer bedst efter forsøg med højere rates
             port.setNumDataBits(8);
             port.setNumStopBits(1);
             port.setParity(SerialPort.NO_PARITY);
@@ -55,26 +57,13 @@ public class ConnectionEKG implements SensorObservable {
                     //System.out.print(new String(buffer));
                 }
             });
-
            // port.addDataListener();
             serialPort = port;
         }
     }
 
-    public ArrayList<Integer> getDataArrayList() {
-        //Når denne her kaldes
-        for (String string :splittedData){
-            //kør det splittede data igennem
-            dataArrayList.add(Integer.parseInt(string));
-            //konverter hver plads fra array til int, og tilføj til arrayList
-        }
 
-        return dataArrayList;
-    }
 
-    private ArrayList<Integer> dataArrayList = new ArrayList<>();
-    private String[] splittedData;
-    private String input = "";
 
     private String readFromPort(){
         byte[] buffer = new byte[serialPort.bytesAvailable()];
@@ -83,28 +72,34 @@ public class ConnectionEKG implements SensorObservable {
         return input;
     }
 
-    public String[] getSplittedData(){
+    public String[] getSplitData(){
 
-        String materiale = readFromPort();
+        String material = readFromPort();
 
-        String[] splittet = materiale.split("\\s+");
-        //
+        String[] splittet = material.split("\\s+");
+        //https://stackoverflow.com/questions/13750716/what-does-regular-expression-s-s-do
+        //bruges til at undgå whitespaces.
+
         for (String indholdISPlittet : splittet){
-            indholdISPlittet= CharMatcher.inRange('0', '9').or(CharMatcher.whitespace()).retainFrom(indholdISPlittet);
+            indholdISPlittet = CharMatcher.inRange('0', '9').or(CharMatcher.whitespace()).retainFrom(indholdISPlittet);
+            // beholder kun tegn der matcher 0-9 og mellemrum, og sorterer alt andet fra
+            //lånt fra https://guava.dev/releases/21.0/api/docs/com/google/common/base/CharMatcher.html
 
         }
-    splittedData = splittet;
+    splitData = splittet;
         //fungerer lidt som tidligere men er mere samlet.
-        return splittedData;
+        return splitData;
     }
 
-
-    public String readData() {
-        byte[] buffer = new byte[serialPort.bytesAvailable()];
-        int antalByteLæst = serialPort.readBytes(buffer, buffer.length);
-        return new String(buffer, 0, antalByteLæst);
+    public ArrayList<Integer> getDataArrayList() {
+        //Når denne her kaldes
+        for (String string :splitData){
+            //kører det splittede data igennem
+            dataArrayList.add(Integer.parseInt(string));
+            //konverterer indhold i array til int, og tilføjes til arrayList plads for plads
+        }
+        return dataArrayList;
     }
-
 
     ArrayList<SensorObserver> observers = new ArrayList<>();
     @Override
@@ -112,9 +107,7 @@ public class ConnectionEKG implements SensorObservable {
         observers.add(sensorObserver);
         //hvilken klasse skal gøres afhængig af materialet herfra?
         //skal kaldes udefra, men ikke nædvendigvis portdatafilter
-//hvis en anden klasse bruger denne her, skal fx. nyMålingController registrere sig selv
-
-
+        //hvis en anden klasse bruger denne her, skal fx. nyMålingController registrere sig selv
     }
 
     @Override
@@ -133,5 +126,6 @@ public class ConnectionEKG implements SensorObservable {
 
         }
     }
+
 }
 

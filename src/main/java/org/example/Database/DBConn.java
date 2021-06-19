@@ -7,8 +7,6 @@ import java.sql.*;
 public class DBConn {
     private  Connection connectionobject;
     String DB_url = "jdbc:mysql://localhost:3306/semesterprojekt2";
-    //String user = "root";
-    //String password = "1234mySQL"; // personligt kodeord
     private String JDBC_driver = "com.mysql.cj.jdbc.Driver";
 
     //status fra William - jeres Connection er oprettet, I manglede lige et par dependencies fra Maven
@@ -20,14 +18,12 @@ public class DBConn {
      */
 
 
-
     public Connection getConnectionobject(String user, String password) {
 
         try{
             Class.forName(JDBC_driver);
             connectionobject = DriverManager.getConnection(DB_url+"?serverTimezone=Eur" +
                     "ope/Amsterdam&amp", "root", "1234mySQL");
-
 
         }catch (SQLException | ClassNotFoundException ex){
             ex.printStackTrace();
@@ -44,14 +40,6 @@ public class DBConn {
             System.out.println("forbindelse til din database oprettet");
         }
         return connectionobject;
-    }
-
-
-
-
-    public DBConn(){
-
-
     }
 
 }

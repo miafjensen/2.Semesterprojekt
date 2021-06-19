@@ -8,12 +8,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.Database.DBConn;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import org.example.MeasurementObjects;
 
 public class SeDataController implements Initializable {
 
@@ -22,15 +25,15 @@ public class SeDataController implements Initializable {
     @FXML
     Label cprLabel;
     @FXML
-    private TableView<ModelTable> tableView;
+    private TableView<MeasurementObjects> tableView;
     @FXML
-    private TableColumn<ModelTable, String> idColumn;
+    private TableColumn<MeasurementObjects, String> idColumn;
     @FXML
-    private TableColumn<ModelTable, String> maalingColumn;
+    private TableColumn<MeasurementObjects, String> maalingColumn;
     @FXML
-    private TableColumn<ModelTable, String> datoColumn;
+    private TableColumn<MeasurementObjects, String> datoColumn;
 
-    ObservableList<ModelTable> oblist = FXCollections.observableArrayList();
+    ObservableList<MeasurementObjects> oblist = FXCollections.observableArrayList();
     String cpr;
     int cprSearched;
     LogInController logInController = new LogInController();
@@ -65,7 +68,7 @@ public class SeDataController implements Initializable {
             ResultSet rs = conn.createStatement().executeQuery("SELECT id, maaling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
             //tableView lavet ved hjælp af: https://www.youtube.com/watch?v=LoiQVoNil9Q&ab_channel=RashidIqbal
             while (rs.next()) {
-                oblist.add(new ModelTable(rs.getInt("id"), rs.getInt("maaling"), rs.getTimestamp("Dato")));
+                oblist.add(new MeasurementObjects(rs.getInt("id"), rs.getString("maaling"), rs.getTimestamp("Dato")));
             }
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             maalingColumn.setCellValueFactory(new PropertyValueFactory<>("maaling"));

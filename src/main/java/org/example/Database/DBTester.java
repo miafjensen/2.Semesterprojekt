@@ -1,5 +1,7 @@
 package org.example.Database;
 
+import org.example.MeasurementObjects;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,16 +33,16 @@ public class DBTester {
             int s = (int) (Math.random() * 4095);
             data[i] = ""+ s;
         }
-        int cpr = 161198;
+        int cpr = 123456;
         cm.InsertIntoMeasurementsArray(cpr, data);
 
 
         //test udtræk fra db
-        /*int cprTal = 161198;
-        ArrayList<measurementObjects> result = cm.FindAllMeasurementResults(cprTal);
-        for (measurementObjects r : result) {
+        int cprTal = 161198;
+        ArrayList<MeasurementObjects> result = cm.FindAllMeasurementResults(cprTal);
+        for (MeasurementObjects r : result) {
             // System.out.print(" ID " + r.getId() + "   Måling " + r.getMaaling() + "   Dato " + r.getDato() + "\n");
-        }*/
+        }
     }
 }
 

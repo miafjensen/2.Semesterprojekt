@@ -4,12 +4,12 @@ import com.google.common.base.CharMatcher;
 
 import java.sql.Array;
 
-public class PortDataFilter {
+public abstract class PortDataFilter {
 
 
     public static String buffer = "";
 
-    public String[] dataString() {
+   /* public String[] dataString() {
         String[] dataStr = new String[10];
 
         ConnectionEKG connEKG = new ConnectionEKG();
@@ -44,7 +44,7 @@ public class PortDataFilter {
 
             return dataStr;
 
-    }
+    }*/
 
     /*public int[] dataFilter() {
         int[] dataLib = new int[50];

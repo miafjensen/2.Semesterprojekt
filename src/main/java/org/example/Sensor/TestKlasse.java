@@ -4,7 +4,6 @@ import java.lang.Object.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import com.google.common.base.CharMatcher;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
@@ -33,7 +32,7 @@ public class TestKlasse {
         //String[] data = portDataFilter.dataString();
         //String[] data = connEKG.getSplittedData();
        // Thread thread = new Thread(connEKG);
-        NyMaalingController nmc = new NyMaalingController();
+        //NyMaalingController nmc = new NyMaalingController();
       //  thread.start();
 
     //    for (String indhold :data){
@@ -138,7 +137,6 @@ public class TestKlasse {
 
         //vi bruger en for/tælle løkke til noget, der skal køre kontinuerligt -
         //hvad har vi indtil videre?
-
 
     }
 }

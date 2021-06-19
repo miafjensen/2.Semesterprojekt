@@ -1,9 +1,6 @@
 package org.example.Sensor;
 
 public interface SensorObservable extends Runnable {
-    //Giv mig til noget du vil sørge for kan observeres.
-
+    //bliver observeret og registreret af SensorObserver
     public void registerObserver(SensorObserver sensorObserver);
-
-
 }
