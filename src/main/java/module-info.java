@@ -9,8 +9,8 @@ module org.example {
 
     opens org.example to javafx.fxml;
     exports org.example;
-    exports org.example.DynamiskGrafTest;
-    opens org.example.DynamiskGrafTest to javafx.fxml;
+    exports org.example.UbrugteKlasser.DynamiskGrafTest;
+    opens org.example.UbrugteKlasser.DynamiskGrafTest to javafx.fxml;
     exports org.example.UbrugteKlasser;
     opens org.example.UbrugteKlasser to javafx.fxml;
 }

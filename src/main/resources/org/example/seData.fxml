@@ -4,29 +4,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="478.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SeDataController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SeDataController">
     <children>
-        <Button fx:id="tilStartsideButton" layoutX="435.0" layoutY="29.0" mnemonicParsing="false"
-                onAction="#switchToStartside" text="Tilbage til start "/>
-        <Label layoutX="36.0" layoutY="33.0" text="CPR:"/>
-        <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---"/>
-        <Button fx:id="logUdButton" layoutX="547.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn"
-                text="Log Ud"/>
-        <TableView fx:id="tableView" layoutX="215.0" layoutY="88.0" prefHeight="367.0" prefWidth="395.0">
+        <Button fx:id="tilStartsideButton" layoutX="593.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
+        <Label layoutX="36.0" layoutY="33.0" text="CPR:" />
+        <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
+        <Button fx:id="logUdButton" layoutX="711.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
+        <TableView fx:id="tableView" layoutX="220.0" layoutY="84.0" prefHeight="491.0" prefWidth="560.0">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="84.66664123535156" text="ID"/>
-                <TableColumn fx:id="maalingColumn" prefWidth="114.66665649414062" text="Måling"/>
-                <TableColumn fx:id="datoColumn" prefWidth="180.00003051757812" text="Dato"/>
+                <TableColumn fx:id="idColumn" prefWidth="122.66667175292969" text="ID" />
+                <TableColumn fx:id="maalingColumn" prefWidth="160.66668701171875" text="Måling" />
+                <TableColumn fx:id="datoColumn" prefWidth="256.6665954589844" text="Dato" />
             </columns>
         </TableView>
-        <TextField fx:id="cprField" layoutX="36.0" layoutY="101.0" promptText="ex. 123456"/>
-        <Button fx:id="searchButton" defaultButton="true" layoutX="80.0" layoutY="136.0" mnemonicParsing="false"
-                onAction="#searchByCpr" text="Søg"/>
-        <Label layoutX="41.0" layoutY="79.0" prefHeight="17.0" prefWidth="115.0" text="Indtast cpr:"/>
+        <TextField fx:id="cprField" layoutX="36.0" layoutY="101.0" promptText="ex. 123456" />
+        <Button fx:id="searchButton" defaultButton="true" layoutX="80.0" layoutY="136.0" mnemonicParsing="false" onAction="#searchByCpr" text="Søg" />
+        <Label layoutX="40.0" layoutY="75.0" prefHeight="17.0" prefWidth="115.0" text="Indtast cpr:" />
 
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 </AnchorPane>

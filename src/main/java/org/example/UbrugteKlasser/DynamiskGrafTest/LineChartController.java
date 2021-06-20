@@ -1,4 +1,4 @@
-package org.example.DynamiskGrafTest;
+package org.example.UbrugteKlasser.DynamiskGrafTest;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,9 +12,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.Duration;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LineChartController {

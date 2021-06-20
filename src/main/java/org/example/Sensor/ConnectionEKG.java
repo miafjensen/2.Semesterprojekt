@@ -25,11 +25,11 @@ public class ConnectionEKG implements SensorObservable {
         for (int n = 0; n < porte.length; n++) {
             SerialPort port = porte[n];
             if (port.getPortDescription().equals("USBSER001")) {
-                //USBSER001 er navnet på sensor, som der søges efter ved port gennemgang.
+                //USBSER001 er navnet på sensor tilsluttet Mias computer, som der søges efter ved port gennemgang.
                 EKGPort = n;
             }
             if (port.getPortDescription().equals("USBSER000")) {
-                //USBSER001 er navnet på sensor, som der søges efter ved port gennemgang.
+                //USBSER001 er navnet på sensor tilsluttet Mias computer, som der søges efter ved port gennemgang.
                 EKGPort = n;
             }
         }
@@ -45,7 +45,6 @@ public class ConnectionEKG implements SensorObservable {
             port.setParity(SerialPort.NO_PARITY);
             port.addDataListener(new SerialPortDataListener() {
                 //https://github.com/cbudtz/EKGMonitorObserver/blob/master/src/main/java/Main.java
-
                 @Override
                 public int getListeningEvents() {
                     return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
@@ -53,16 +52,8 @@ public class ConnectionEKG implements SensorObservable {
 
                 @Override
                 public void serialEvent(SerialPortEvent serialPortEvent) {
-                    //  if(serialPortEvent.getEventType()!= SerialPort.LISTENING_EVENT_DATA_AVAILABLE){
-                    // System.out.println(port.bytesAvailable());
-                    // return;
-                    //}
-                    //byte[] buffer = new byte[port.bytesAvailable()];
-                    //  int antalByteLæst = port.readBytes(buffer, buffer.length);
-                    //System.out.print(new String(buffer));
-                }
+                     }
             });
-            // port.addDataListener();
             serialPort = port;
         }
     }
@@ -79,9 +70,8 @@ public class ConnectionEKG implements SensorObservable {
 
         String material = readFromPort();
 
-        String[] splittet = material.split("\\s+");
+        String[] splittet = material.split("\\s+");     //bruges til at undgå whitespaces.
         //https://stackoverflow.com/questions/13750716/what-does-regular-expression-s-s-do
-        //bruges til at undgå whitespaces.
 
         for (String indholdISPlittet : splittet) {
             indholdISPlittet = CharMatcher.inRange('0', '9').or(CharMatcher.whitespace()).retainFrom(indholdISPlittet);
@@ -89,12 +79,11 @@ public class ConnectionEKG implements SensorObservable {
             //lånt fra https://guava.dev/releases/21.0/api/docs/com/google/common/base/CharMatcher.html
             }
         splitData = splittet;
-        //fungerer lidt som tidligere men er mere samlet.
+
         return splitData;
     }
 
     public ArrayList<Integer> getDataArrayList() {
-        //Når denne her kaldes
         for (String string : splitData) {
             //kører det splittede data igennem
             dataArrayList.add(Integer.parseInt(string));
@@ -107,10 +96,8 @@ public class ConnectionEKG implements SensorObservable {
 
     @Override
     public void registerObserver(SensorObserver sensorObserver) {
+        //kaldes fra SensorObservable og gør denne klasse observerbar for SensorObserver
         observers.add(sensorObserver);
-        //hvilken klasse skal gøres afhængig af materialet herfra?
-        //skal kaldes udefra, men ikke nædvendigvis portdatafilter
-        //hvis en anden klasse bruger denne her, skal fx. nyMålingController registrere sig selv
     }
 
     @Override

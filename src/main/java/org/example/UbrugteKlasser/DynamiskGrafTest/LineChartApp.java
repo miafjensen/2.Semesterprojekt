@@ -1,4 +1,4 @@
-package org.example.DynamiskGrafTest;
+package org.example.UbrugteKlasser.DynamiskGrafTest;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,7 +17,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * JavaFX App

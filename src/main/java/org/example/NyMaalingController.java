@@ -1,11 +1,8 @@
 package org.example;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -13,7 +10,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.util.Duration;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
 import org.example.Sensor.ConnectionEKG;
@@ -38,50 +34,117 @@ public class NyMaalingController implements SensorObserver, Initializable {
     Connection conn = dbConn.getConnectionobject();
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     LogInController logInController = new LogInController();
-
-
-    //Dynamisk graf lavet ved hjælp af:
-    // https://edencoding.com/javafx-charts/#firing-the-event-every-second
-    // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
-
-
-    @FXML
-    LineChart<String, Number> lineChart = new LineChart<>(
-            new CategoryAxis(),
-            new NumberAxis()
-    );
-    XYChart.Series<String, Number> series = new XYChart.Series<>(
-            FXCollections.observableArrayList(
-                    new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0),
-                    new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0),
-                    new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0)
-            )
-    );
-
-    int numberOfPoints = 20*3;
-
+    int numberOfPoints = 20 * 3; //fortæller hvor mange punkter der er "XYChart.series" fra start, så grafen kan fortsætte derfra
 
     @FXML
     Label pulsLabel;
     @FXML
     Label cprLabel;
 
-    public NyMaalingController() {
+    @FXML
+    LineChart<String, Number> lineChart = new LineChart<>(
+            new CategoryAxis(),
+            new NumberAxis()
+    );
 
+    XYChart.Series<String, Number> series = new XYChart.Series<>(
+            FXCollections.observableArrayList(          //den serie af punkter vi starter med
+                    // koordinater til serien, der med til at sørge for hvor mange punkter der er fra start, som påvirker hvor mange punkter der kan ses ad gangen
+                    new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0),
+                    new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0),
+                    new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0)
+                    //Dynamisk graf lavet ved hjælp af:
+                    // https://edencoding.com/javafx-charts/#firing-the-event-every-second
+                    // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
+            )
+    );
+
+    public NyMaalingController() {
         ConnectionEKG connectionEKG = new ConnectionEKG();
         connectionEKG.registerObserver(this);
         new Thread(connectionEKG).start();
-
-
     }
 
-
-    // henter og viser cpr fra LogIn på cprLabel
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
-        cprLabel.setText("" + logInController.getCprTal());
+        cprLabel.setText("" + logInController.getCprTal());  // henter og viser cpr fra LogIn på cprLabel
     }
+
+    @FXML
+    private void switchToStartside() throws IOException {
+        if (control == false) {     //tjekker om startMaaling kører, hvis den gør lukkes den inden der skiftes side
+            event.shutdown();
+            control = true;
+        }
+        App.setRoot("startside");
+    }
+
+    @FXML
+    private synchronized void startMaaling() throws InterruptedException {
+        event = Executors.newSingleThreadScheduledExecutor();
+        if (control) {          // sørger for at den kun kan startes en gang
+            control = false;
+            event.scheduleAtFixedRate(() ->         //styrer den simulerede puls
+                    Platform.runLater(() -> {
+                        int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
+                        pulsLabel.setText("" + puls);
+
+                    }), 0, 3000, TimeUnit.MILLISECONDS);
+
+            event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
+                    Platform.runLater(() -> {
+
+                        Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
+
+                        lineChart.getData().add(series); // tilføjer punkt til grafen
+
+                        series.getData().add(new XYChart.Data<String, Number>("" + numberOfPoints++, random));  // laver koordinaterne til punktet
+
+                        series.getData().remove(0); //Sletter det tidligste punkt på grafen
+                    }), 0, 100, TimeUnit.MILLISECONDS);
+
+            event.scheduleAtFixedRate(() ->          // styrer overførslen til Databasen
+                    Platform.runLater(() -> {
+
+                        for (String[] indhold : placeholder) {
+                            try {
+                                mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                System.out.println("fejl i insert");
+                            }
+                        }
+                        placeholder.clear();
+                        System.out.println("sendt til db");
+                    }), 1000, 5000, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    @FXML
+    private void stopMaaling(ActionEvent actionEvent) {
+        event.shutdown(); //lukker for de events der er startet af startMaaling
+        control = true;
+    }
+
+    @FXML
+    private void switchToLogIn() throws IOException {
+        if (control == false) {  //tjekker om startMaaling kører, hvis den gør lukkes den inden der skiftes side
+            event.shutdown();
+            control = true;
+        }
+        App.setRoot("logIn");
+    }
+
+    ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays til data fra sensor
+
+    @Override
+    public void notify(ConnectionEKG connectionEKG) {  //kaldes fra SensorObserver og giver besked når der er data at hente
+        placeholder.add(connectionEKG.getSplitData());      //bruger materiale fra ConnectionEKG
+    }
+}
+
+// nogle af de konstruktører der er blevet arbejdet med men enten ikke er blevet færdige, eller fundet bedre løsninger:
 
     /*public void updateGraph(int[] input) {
         dataseries.setName("EKG");
@@ -117,77 +180,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
         taskThread.start();
     }*/
 
-    @FXML
-    private void switchToStartside() throws IOException {
-        if (control == false) {
-            event.shutdown();
-            control = true;
-        }
-        App.setRoot("startside");
-
-    }
-
-    @FXML
-    private synchronized void startMaaling() throws InterruptedException {
-        event = Executors.newSingleThreadScheduledExecutor();
-        if (control) {
-            control = false;
-            event.scheduleAtFixedRate(() ->
-                    Platform.runLater(() -> {
-                        int puls = (int) Math.round(110 - (Math.random() * 60));
-                        pulsLabel.setText("" + puls);
-
-                    }), 0, 1000, TimeUnit.MILLISECONDS);
-            event.scheduleAtFixedRate(() ->
-                    Platform.runLater(() -> {
-                        // styrer vores dynamiske graf
-                        Integer random = ThreadLocalRandom.current().nextInt(10);
-
-                        lineChart.getData().add(series);
-
-                        // put random number with current time
-                        series.getData().add(new XYChart.Data<String, Number>(""+numberOfPoints++, random));
-                        series.getData().remove(0);
-
-                    }), 0, 100, TimeUnit.MILLISECONDS);
-
-
-            event.scheduleAtFixedRate(() ->
-                    Platform.runLater(() -> {
-
-                        for (String[] indhold : placeholder) {
-                            try {
-                                mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                System.out.println("fejl i insert");
-                            }
-
-                        }
-                        placeholder.clear();
-
-                        System.out.println("sendt til db");
-                    }), 1000, 5000, TimeUnit.MILLISECONDS);
-        }
-
-    }
-
-    @FXML
-    private void stopMaaling(ActionEvent actionEvent) {
-        event.shutdown();
-        control = true;
-    }
-
-    @FXML
-    private void switchToLogIn() throws IOException {
-        if (control == false) {
-            event.shutdown();
-            control = true;
-        }
-        App.setRoot("logIn");
-    }
-
-
     /*public void updateGraph(ActionEvent actionEvent) throws IOException {
 
         //updateGraph(generateData());
@@ -205,15 +197,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
         }
         return data;
     }*/
-
-    ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays
-
-    @Override
-    public void notify(ConnectionEKG connectionEKG) {
-        placeholder.add(connectionEKG.getSplitData());
-        //bruger materiale fra ConnectionEKG
-
-    }
 
     /*private int[] generateData() throws IOException {
         int[] data = new int[35];
@@ -240,4 +223,3 @@ public class NyMaalingController implements SensorObserver, Initializable {
         return data;
 
     }*/
-}

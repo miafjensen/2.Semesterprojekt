@@ -3,6 +3,7 @@ package org.example.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import org.example.MeasurementObjects;
 
 public class MeasurementDTO {
@@ -16,17 +17,16 @@ public class MeasurementDTO {
     public MeasurementDTO(Connection connection) {
         this.connection = connection;
         createTable();
-        // opretter automatisk table når der oprettes forbindelse til sql,
-        // hvis den ikke allerede eksisterer i databasen
     }
 
+    // opretter automatisk table når der oprettes forbindelse til sql, hvis den ikke allerede eksisterer i databasen
     public void createTable() {
         try {
             String SQLTable = "create table if not exists measurements ( id int auto_increment primary key," +
                     "Cpr varchar(6) not null, maaling text not null, Dato timestamp default CURRENT_TIMESTAMP null);";
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
-            System.out.println("table oprettet");
+            System.out.println("table oprettet eller eksisterer allerede");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -62,6 +62,7 @@ public class MeasurementDTO {
         }
     }
 
+    // Se id, måling og dato fra tabellen der matcher CPR
     public ArrayList<MeasurementObjects> FindAllMeasurementResults(int CPR) {
 
         ArrayList liste = new ArrayList();

@@ -9,10 +9,8 @@ import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
 import org.example.NyMaalingController;
 
-public class TestKlasse {
+public class TestKlasse { // brygt til test af filtre til den rå data fra Arduino
 
-    private static String user;
-    private static String password;
     private static Connection connection;
 
     public static String buffer = "";

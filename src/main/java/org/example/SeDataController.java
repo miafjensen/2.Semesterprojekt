@@ -8,12 +8,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.Database.DBConn;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
 import org.example.MeasurementObjects;
 
 public class SeDataController implements Initializable {
@@ -53,10 +55,9 @@ public class SeDataController implements Initializable {
         cprLabel.setText("" + logInController.getCprTal());
     }
 
-
     @FXML
-    private void searchByCpr(ActionEvent ae) throws IOException, SQLException {
-        if (cprField.getText().matches("\\d{6}")) {
+    private void searchByCpr(ActionEvent ae) throws IOException, SQLException { //bruger indtastede cpr til at søge på matchene data i databasen
+        if (cprField.getText().matches("\\d{6}")) {  //kontrollerer indtastningen, genbrugt fra logIn
             cpr = cprField.getText();
             cprSearched = Integer.parseInt(cpr);
 
@@ -71,7 +72,7 @@ public class SeDataController implements Initializable {
             tableView.setItems(oblist);
 
         } else {
-            //Pop-up vindue ved fejl i CPR
+            //Pop-up vindue ved fejl i CPR genbrugt fra logIn
             //https://code.makery.ch/blog/javafx-dialogs-official/
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl i CPR");

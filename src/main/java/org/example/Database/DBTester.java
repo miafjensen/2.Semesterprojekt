@@ -34,7 +34,7 @@ public class DBTester {
 
         cm.FindAllMeasurementResults(cprTal);
 
-        //test af create teble
+        //test af create table
         cm.createTable();
     }
 }
