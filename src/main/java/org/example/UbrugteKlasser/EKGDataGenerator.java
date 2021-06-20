@@ -1,8 +1,11 @@
-package org.example.Sensor;
+package org.example.UbrugteKlasser;
+
+import org.example.Sensor.SensorObservable;
+import org.example.Sensor.SensorObserver;
 
 import java.util.ArrayList;
 
-public abstract class EKGDataGenerator implements SensorObservable{
+public abstract class EKGDataGenerator implements SensorObservable {
 
     //private ArrayList<PortDataFilter>
 

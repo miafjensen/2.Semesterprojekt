@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.DynamiskGrafTest.LineChartController">
+    <children>
+        <LineChart fx:id="lineChart" title="EKG" animated="true" layoutX="47.0" layoutY="39.0" prefHeight="487.0" prefWidth="644.0">
+            <xAxis>
+                <CategoryAxis fx:id="xAxis" label="Time/ms" animated="false" side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id= "yAxis" label="Value" animated="false" side="LEFT" />
+            </yAxis>
+        </LineChart>
+    </children>
+</AnchorPane>

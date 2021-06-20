@@ -1,27 +1,33 @@
 package org.example;
 
-import java.io.*;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
 import org.example.Sensor.ConnectionEKG;
 import org.example.Sensor.SensorObserver;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 
 public class NyMaalingController implements SensorObserver, Initializable {
@@ -32,13 +38,28 @@ public class NyMaalingController implements SensorObserver, Initializable {
     Connection conn = dbConn.getConnectionobject();
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     LogInController logInController = new LogInController();
-    
+
+
+    //Dynamisk graf lavet ved hjælp af:
+    // https://edencoding.com/javafx-charts/#firing-the-event-every-second
+    // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
+
 
     @FXML
-    //Avoid making uncasted object Initialises
-    LineChart<String, Integer> GraphArea;
-    XYChart.Series<String, Integer> dataseries = new XYChart.Series();
-    //vi kan også bruge <String,Integer> hvis vi skriver "" +index
+    LineChart<String, Number> lineChart = new LineChart<>(
+            new CategoryAxis(),
+            new NumberAxis()
+    );
+    XYChart.Series<String, Number> series = new XYChart.Series<>(
+            FXCollections.observableArrayList(
+                    new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0),
+                    new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0),
+                    new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0), new XYChart.Data<>(""+1,0)
+            )
+    );
+
+    int numberOfPoints = 20*3;
+
 
     @FXML
     Label pulsLabel;
@@ -48,9 +69,10 @@ public class NyMaalingController implements SensorObserver, Initializable {
     public NyMaalingController() {
 
         ConnectionEKG connectionEKG = new ConnectionEKG();
-
         connectionEKG.registerObserver(this);
         new Thread(connectionEKG).start();
+
+
     }
 
 
@@ -61,8 +83,9 @@ public class NyMaalingController implements SensorObserver, Initializable {
         cprLabel.setText("" + logInController.getCprTal());
     }
 
-    public void updateGraph(int[] input) {
+    /*public void updateGraph(int[] input) {
         dataseries.setName("EKG");
+
 
         Thread taskThread = new Thread(new Runnable() {
             @Override
@@ -71,23 +94,28 @@ public class NyMaalingController implements SensorObserver, Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
+
+                        GraphArea.getData().add(
+                                new XYChart.Series<>()
+                        );
+
+
                         for (int i = 0; i < input.length; i++) {
 
                             // GraphArea.getData().add(new XYChart.Data<>(i,input[i]));
-
-                            dataseries.getData().add(new XYChart.Data<String, Integer>("" + i, input[i]));
-
+                            dataseries.getData().add(new XYChart.Data<String, Integer>(i, input[i]));
                             //Fejlen ligger her - skal vi rette LineCHart til en
 
                         }
                         GraphArea.getData().removeAll();
                         GraphArea.getData().add(dataseries);
+
                     }
                 });
             }
         });
         taskThread.start();
-    }
+    }*/
 
     @FXML
     private void switchToStartside() throws IOException {
@@ -110,18 +138,19 @@ public class NyMaalingController implements SensorObserver, Initializable {
                         pulsLabel.setText("" + puls);
 
                     }), 0, 1000, TimeUnit.MILLISECONDS);
-
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
-                        try {
-                            for (int index : generateData()) {
-                                // System.out.println(index);
-                            }
-                            updateGraph(generateData());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }), 0, 15000, TimeUnit.MILLISECONDS);
+                        // styrer vores dynamiske graf
+                        Integer random = ThreadLocalRandom.current().nextInt(10);
+
+                        lineChart.getData().add(series);
+
+                        // put random number with current time
+                        series.getData().add(new XYChart.Data<String, Number>(""+numberOfPoints++, random));
+                        series.getData().remove(0);
+
+                    }), 0, 100, TimeUnit.MILLISECONDS);
+
 
             event.scheduleAtFixedRate(() ->
                     Platform.runLater(() -> {
@@ -159,7 +188,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     }
 
 
-    public void updateGraph(ActionEvent actionEvent) throws IOException {
+    /*public void updateGraph(ActionEvent actionEvent) throws IOException {
 
         //updateGraph(generateData());
         for (int index : generateData()) {
@@ -167,15 +196,15 @@ public class NyMaalingController implements SensorObserver, Initializable {
 
         }
         updateGraph(generateData());
-    }
+    }*/
 
-    private int[] generateData() throws IOException {
+    /*private int[] generateData() throws IOException {
         int[] data = new int[15];
         for (int i = 0; i < data.length; i++) {
             data[i] = (int) (Math.random() * 100);
         }
         return data;
-    }
+    }*/
 
     ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays
 

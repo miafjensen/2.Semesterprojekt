@@ -1,4 +1,4 @@
-package org.example.Sensor;
+package org.example.UbrugteKlasser;
 
 import com.google.common.base.CharMatcher;
 
