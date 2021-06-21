@@ -7,9 +7,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.NyMaalingController">
     <children>
         <Button fx:id="tilStartsideButton" layoutX="589.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToStartside" text="Tilbage til start " />
-        <LineChart fx:id="lineChart" animated="true" layoutX="50.0" layoutY="98.0" prefHeight="456.0" prefWidth="700.0" title="EKG">
+        <LineChart fx:id="lineChart" layoutX="50.0" layoutY="98.0" prefHeight="456.0" prefWidth="700.0" title="EKG">
             <xAxis>
-                <CategoryAxis animated="false" label="Time/ms" side="BOTTOM" fx:id="xAxis" />
+                <CategoryAxis fx:id="xAxis" animated="false" label="Time/ms" side="BOTTOM" />
             </xAxis>
             <yAxis>
                 <NumberAxis fx:id="yAxis" animated="false" label="Value" side="LEFT" />

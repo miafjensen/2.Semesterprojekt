@@ -27,10 +27,12 @@ public class ConnectionEKG implements SensorObservable {
             if (port.getPortDescription().equals("USBSER001")) {
                 //USBSER001 er navnet på sensor tilsluttet Mias computer, som der søges efter ved port gennemgang.
                 EKGPort = n;
+                System.out.println("port " + EKGPort + " fundet");
             }
             if (port.getPortDescription().equals("USBSER000")) {
                 //USBSER001 er navnet på sensor tilsluttet Mias computer, som der søges efter ved port gennemgang.
                 EKGPort = n;
+                System.out.println("port " + EKGPort + " fundet");
             }
         }
 
@@ -39,6 +41,7 @@ public class ConnectionEKG implements SensorObservable {
 
             port.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 10, 0); // port tjekes hvert 10. ms
             port.openPort();
+            System.out.println("port åbnet");
             port.setBaudRate(38400); //denne baudrate fungerer bedst efter forsøg med højere rates
             port.setNumDataBits(8);
             port.setNumStopBits(1);

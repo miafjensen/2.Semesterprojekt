@@ -85,31 +85,33 @@ public class NyMaalingController implements SensorObserver, Initializable {
         event = Executors.newSingleThreadScheduledExecutor();
         if (control) {          // sørger for at den kun kan startes en gang
             control = false;
-            event.scheduleAtFixedRate(() ->         //styrer den simulerede puls
-                    Platform.runLater(() -> {
-                        int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
-                        pulsLabel.setText("" + puls);
-
-                    }), 0, 3000, TimeUnit.MILLISECONDS);
-
+            lineChart.getData().add(series); // tilføjer punkt til grafen
             event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
                     Platform.runLater(() -> {
 
                         Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
-
-                        lineChart.getData().add(series); // tilføjer punkt til grafen
+                        series.getData().remove(0); //Sletter det tidligste punkt på grafen
 
                         series.getData().add(new XYChart.Data<String, Number>("" + numberOfPoints++, random));  // laver koordinaterne til punktet
 
-                        series.getData().remove(0); //Sletter det tidligste punkt på grafen
+
                     }), 0, 100, TimeUnit.MILLISECONDS);
+            event.scheduleAtFixedRate(() ->          // styrer puls simulering
+                    Platform.runLater(() -> {
+                        int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
+                        pulsLabel.setText("" + puls);
+                    }), 1000, 3000, TimeUnit.MILLISECONDS);
 
             event.scheduleAtFixedRate(() ->          // styrer overførslen til Databasen
                     Platform.runLater(() -> {
+                        //puls simulering
+                        int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
+                        pulsLabel.setText("" + puls);
 
                         for (String[] indhold : placeholder) {
                             try {
                                 mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
+                                System.out.println("printet til DB");
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 System.out.println("fejl i insert");
