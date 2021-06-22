@@ -18,8 +18,8 @@
         <Label layoutX="39.0" layoutY="76.0" text="Puls" />
         <Label id="pulsdata" fx:id="pulsLabel" layoutX="88.0" layoutY="76.0" prefHeight="17.0" prefWidth="24.0" text="---" />
         <Button fx:id="logUdButton" layoutX="705.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchToLogIn" text="Log Ud" />
-        <Button fx:id="StartMålingButton" defaultButton="true" layoutX="172.0" layoutY="29.0" mnemonicParsing="false" onAction="#startMaaling" text="Start Måling" />
-        <Button fx:id="StopMålingButton" layoutX="273.0" layoutY="29.0" mnemonicParsing="false" onAction="#stopMaaling" text="Stop Måling" />
+        <Button fx:id="startMålingButton" defaultButton="true" layoutX="172.0" layoutY="29.0" mnemonicParsing="false" onAction="#startMaaling" text="Start Måling" />
+        <Button fx:id="stopMålingButton" layoutX="273.0" layoutY="29.0" mnemonicParsing="false" onAction="#stopMaaling" text="Stop Måling" />
         <Label fx:id="CPR" layoutX="36.0" layoutY="33.0" text="CPR:" />
         <Label fx:id="cprLabel" layoutX="88.0" layoutY="33.0" prefHeight="17.0" prefWidth="98.0" text="---" />
     </children>

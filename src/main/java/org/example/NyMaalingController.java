@@ -9,12 +9,13 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
 import org.example.Sensor.ConnectionEKG;
 import org.example.Sensor.SensorObserver;
-
+import java.util.Date;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -35,11 +36,18 @@ public class NyMaalingController implements SensorObserver, Initializable {
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     LogInController logInController = new LogInController();
     int startOfPoints = 1; //angiver hvor "XYChart.series" skal starte, så grafen kan fortsætte derfra
+    Date date = new Date();
+
+
 
     @FXML
     Label pulsLabel;
     @FXML
     Label cprLabel;
+    @FXML
+    Button startMålingButton;
+    @FXML
+    Button stopMålingButton;
 
     @FXML
     LineChart<String, Number> lineChart = new LineChart<>(
@@ -50,9 +58,9 @@ public class NyMaalingController implements SensorObserver, Initializable {
     XYChart.Series<String, Number> series = new XYChart.Series<>(
             FXCollections.observableArrayList(          //den serie af punkter vi starter med
                     // koordinater til serien, der med til at sørge for hvor mange punkter der er fra start, som påvirker hvor mange punkter der kan ses ad gangen
-                    new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0),
-                    new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0),
-                    new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0)
+                    new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0),
+                    new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0),
+                    new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0)
                     //Dynamisk graf lavet ved hjælp af:
                     // https://edencoding.com/javafx-charts
                     // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
@@ -70,22 +78,17 @@ public class NyMaalingController implements SensorObserver, Initializable {
         //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
         cprLabel.setText("" + logInController.getCprTal());  // henter og viser cpr fra LogIn på cprLabel
         lineChart.getData().add(series); // tilføjer punkt til grafen
+        //button event fundet her: http://tutorials.jenkov.com/javafx/button.html#button-events
+        stopMålingButton.setDisable(true); //deaktiverer stop knap, fordi der ikke er nogen event at stoppe
     }
 
-    @FXML
-    private void switchToStartside() throws IOException {
-        if (control == false) {     //tjekker om startMaaling kører, hvis den gør lukkes den inden der skiftes side
-            event.shutdown();
-            control = true;
-        }
-        App.setRoot("startside");
-    }
 
     @FXML
     private synchronized void startMaaling() throws InterruptedException {
         event = Executors.newSingleThreadScheduledExecutor();
-        if (control) {          // sørger for at den kun kan startes en gang
-            control = false;
+        control = false;                    // bruges til andre knapper kan lukke event hvis det er igang inden der skiftes side
+        startMålingButton.setDisable(true); // deaktiverer start knap så der ikke kan trykkes flere gange, og dermed starte trådene flere gange samtidigt
+        stopMålingButton.setDisable(false); // aktiverer stop knap
             event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
                     Platform.runLater(() -> {
 
@@ -115,24 +118,41 @@ public class NyMaalingController implements SensorObserver, Initializable {
                             }
                         }
                         placeholder.clear();
-                        System.out.println("sendt til db");
+                        System.out.println("sendt til db: " + date );
                     }), 1000, 5000, TimeUnit.MILLISECONDS);
-        }
+
+
     }
 
     @FXML
-    private void stopMaaling(ActionEvent actionEvent) {
-        event.shutdown(); //lukker for de events der er startet af startMaaling
+    private void stopMaaling() {
+        event.shutdown();                       //lukker for de events der er startet af startMaaling
+        startMålingButton.setDisable(false);    // genaktiverer start knap
+        stopMålingButton.setDisable(true);      // deaktiverer stop knap
         control = true;
     }
 
     @FXML
     private void switchToLogIn() throws IOException {
-        if (control == false) {  //tjekker om startMaaling kører, hvis den gør lukkes den inden der skiftes side
-            event.shutdown();
+        if (control == false) {
+            event.shutdown();                       //lukker for de events der er startet af startMaaling
+            startMålingButton.setDisable(false);    // genaktiverer start knap
+            stopMålingButton.setDisable(true);      // deaktiverer stop knape
             control = true;
         }
+
         App.setRoot("logIn");
+    }
+
+    @FXML
+    private void switchToStartside() throws IOException {
+        if (control == false) {
+            event.shutdown();                       //lukker for de events der er startet af startMaaling
+            startMålingButton.setDisable(false);    // genaktiverer start knap
+            stopMålingButton.setDisable(true);      // deaktiverer stop knape
+            control = true;
+        }
+        App.setRoot("startside");
     }
 
     ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays til data fra sensor
