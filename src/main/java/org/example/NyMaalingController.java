@@ -77,7 +77,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
         cprLabel.setText("" + logInController.getCprTal());  // henter og viser cpr fra LogIn på cprLabel
-        lineChart.getData().add(series); // tilføjer punkt til grafen
+        lineChart.getData().add(series); // opretter grafen udfra givne punkter
         //button event fundet her: http://tutorials.jenkov.com/javafx/button.html#button-events
         stopMålingButton.setDisable(true); //deaktiverer stop knap, fordi der ikke er nogen event at stoppe
     }

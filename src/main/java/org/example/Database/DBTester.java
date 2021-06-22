@@ -25,7 +25,7 @@ public class DBTester {
             int s = (int) (Math.random() * 4095);
             data[i] = ""+ s;
         }
-        int cpr = 123456;
+        int cpr = 160195;
         cm.InsertIntoMeasurementsArray(cpr, data);
 
 
