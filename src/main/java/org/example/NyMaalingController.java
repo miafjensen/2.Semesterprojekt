@@ -34,7 +34,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     Connection conn = dbConn.getConnectionobject();
     MeasurementDTO mDTO = new MeasurementDTO(conn);
     LogInController logInController = new LogInController();
-    int numberOfPoints = 20 * 3; //fortæller hvor mange punkter der er "XYChart.series" fra start, så grafen kan fortsætte derfra
+    int startOfPoints = 1; //angiver hvor "XYChart.series" skal starte, så grafen kan fortsætte derfra
 
     @FXML
     Label pulsLabel;
@@ -54,7 +54,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
                     new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0),
                     new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0), new XYChart.Data<>("" + 1, 0)
                     //Dynamisk graf lavet ved hjælp af:
-                    // https://edencoding.com/javafx-charts/#firing-the-event-every-second
+                    // https://edencoding.com/javafx-charts
                     // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
             )
     );
@@ -69,6 +69,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
         cprLabel.setText("" + logInController.getCprTal());  // henter og viser cpr fra LogIn på cprLabel
+        lineChart.getData().add(series); // tilføjer punkt til grafen
     }
 
     @FXML
@@ -85,14 +86,13 @@ public class NyMaalingController implements SensorObserver, Initializable {
         event = Executors.newSingleThreadScheduledExecutor();
         if (control) {          // sørger for at den kun kan startes en gang
             control = false;
-            lineChart.getData().add(series); // tilføjer punkt til grafen
             event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
                     Platform.runLater(() -> {
 
                         Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
                         series.getData().remove(0); //Sletter det tidligste punkt på grafen
 
-                        series.getData().add(new XYChart.Data<String, Number>("" + numberOfPoints++, random));  // laver koordinaterne til punktet
+                        series.getData().add(new XYChart.Data<String, Number>("" + startOfPoints++, random));  // laver koordinaterne til punktet
 
 
                     }), 0, 100, TimeUnit.MILLISECONDS);
@@ -100,13 +100,10 @@ public class NyMaalingController implements SensorObserver, Initializable {
                     Platform.runLater(() -> {
                         int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
                         pulsLabel.setText("" + puls);
-                    }), 1000, 3000, TimeUnit.MILLISECONDS);
+                    }), 0, 3000, TimeUnit.MILLISECONDS);
 
             event.scheduleAtFixedRate(() ->          // styrer overførslen til Databasen
                     Platform.runLater(() -> {
-                        //puls simulering
-                        int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
-                        pulsLabel.setText("" + puls);
 
                         for (String[] indhold : placeholder) {
                             try {
