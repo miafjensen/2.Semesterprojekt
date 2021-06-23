@@ -1,4 +1,4 @@
-package org.example.UbrugteKlasser.DynamiskGrafTest;
+package ubrugt.UbrugteKlasser.DynamiskGrafTest;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

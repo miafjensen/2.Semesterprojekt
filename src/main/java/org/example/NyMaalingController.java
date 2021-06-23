@@ -2,7 +2,6 @@ package org.example;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -13,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
-import org.example.Sensor.ConnectionEKG;
+import org.example.Sensor.EKGConn;
 import org.example.Sensor.SensorObserver;
 import java.util.Date;
 import java.io.IOException;
@@ -68,9 +67,9 @@ public class NyMaalingController implements SensorObserver, Initializable {
     );
 
     public NyMaalingController() {
-        ConnectionEKG connectionEKG = new ConnectionEKG();
-        connectionEKG.registerObserver(this);
-        new Thread(connectionEKG).start();
+        EKGConn EKGConn = new EKGConn();
+        EKGConn.registerObserver(this);
+        new Thread(EKGConn).start();
     }
 
     @Override
@@ -89,28 +88,27 @@ public class NyMaalingController implements SensorObserver, Initializable {
         control = false;                    // bruges til andre knapper kan lukke event hvis det er igang inden der skiftes side
         startMålingButton.setDisable(true); // deaktiverer start knap så der ikke kan trykkes flere gange, og dermed starte trådene flere gange samtidigt
         stopMålingButton.setDisable(false); // aktiverer stop knap
-            event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
+        event.scheduleAtFixedRate(() ->          // styrer puls simulering
+                Platform.runLater(() -> {
+                    int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
+                    pulsLabel.setText("" + puls);
+                }), 0, 3000, TimeUnit.MILLISECONDS);
+
+        event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
                     Platform.runLater(() -> {
 
                         Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
+                        series.getData().add(new XYChart.Data<String, Number>("" + startOfPoints++, random));  // laver koordinaterne til punktet
                         series.getData().remove(0); //Sletter det tidligste punkt på grafen
 
-                        series.getData().add(new XYChart.Data<String, Number>("" + startOfPoints++, random));  // laver koordinaterne til punktet
-
-
                     }), 0, 100, TimeUnit.MILLISECONDS);
-            event.scheduleAtFixedRate(() ->          // styrer puls simulering
-                    Platform.runLater(() -> {
-                        int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
-                        pulsLabel.setText("" + puls);
-                    }), 0, 3000, TimeUnit.MILLISECONDS);
 
             event.scheduleAtFixedRate(() ->          // styrer overførslen til Databasen
                     Platform.runLater(() -> {
 
                         for (String[] indhold : placeholder) {
                             try {
-                                mDTO.InsertIntoMeasurementsArray(Integer.parseInt(cprLabel.getText()), indhold);
+                                mDTO.InsertIntoMeasurementsArray(logInController.getCprTal(), indhold);
                                 System.out.println("printet til DB");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -158,8 +156,8 @@ public class NyMaalingController implements SensorObserver, Initializable {
     ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays til data fra sensor
 
     @Override
-    public void notify(ConnectionEKG connectionEKG) {  //kaldes fra SensorObserver og giver besked når der er data at hente
-        placeholder.add(connectionEKG.getSplitData());      //bruger materiale fra ConnectionEKG
+    public void notify(EKGConn EKGConn) {  //kaldes fra SensorObserver og giver besked når der er data at hente
+        placeholder.add(EKGConn.getSplitData());      //bruger materiale fra ConnectionEKG
     }
 }
 

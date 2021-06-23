@@ -8,15 +8,16 @@ import com.google.common.base.CharMatcher;
 import java.util.ArrayList;
 
 
-public class ConnectionEKG implements SensorObservable {
+public class EKGConn implements SensorObservable {
 //her hentes data
 
     private SerialPort serialPort;
     private ArrayList<Integer> dataArrayList = new ArrayList<>();
     private String[] splitData;
     private String input = "";
+    ArrayList<SensorObserver> observers = new ArrayList<>();
 
-    public ConnectionEKG() {
+    public EKGConn() {
         //Klasse til at håndtere serielport, filtrere data, og returnere dem.
 
         SerialPort[] porte = SerialPort.getCommPorts();
@@ -55,7 +56,7 @@ public class ConnectionEKG implements SensorObservable {
 
                 @Override
                 public void serialEvent(SerialPortEvent serialPortEvent) {
-                     }
+                }
             });
             serialPort = port;
         }
@@ -80,7 +81,7 @@ public class ConnectionEKG implements SensorObservable {
             indholdISPlittet = CharMatcher.inRange('0', '9').or(CharMatcher.whitespace()).retainFrom(indholdISPlittet);
             // beholder kun tegn der matcher 0-9 og mellemrum, og sorterer alt andet fra
             //lånt fra https://guava.dev/releases/21.0/api/docs/com/google/common/base/CharMatcher.html
-            }
+        }
         splitData = splittet;
 
         return splitData;
@@ -95,8 +96,6 @@ public class ConnectionEKG implements SensorObservable {
         return dataArrayList;
     }
 
-    ArrayList<SensorObserver> observers = new ArrayList<>();
-
     @Override
     public void registerObserver(SensorObserver sensorObserver) {
         //kaldes fra SensorObservable og gør denne klasse observerbar for SensorObserver
@@ -104,9 +103,9 @@ public class ConnectionEKG implements SensorObservable {
     }
 
     @Override
-    public void run() {
+    public void run() {         //sørger for at loopet kører
 
-        while (true) {
+        while (true) {          // kører uendeligt
 
             for (SensorObserver x : observers) {
                 x.notify(this);

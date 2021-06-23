@@ -1,4 +1,4 @@
-package org.example.UbrugteKlasser.DynamiskGrafTest;
+package ubrugt.UbrugteKlasser.DynamiskGrafTest;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,4 +1,4 @@
-package org.example.UbrugteKlasser.DynamiskGrafTest;
+package ubrugt.UbrugteKlasser.DynamiskGrafTest;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,7 +8,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import org.example.Sensor.ConnectionEKG;
+import org.example.Sensor.EKGConn;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class LineChartApp extends Application {
 
-    ConnectionEKG connectionEKG = new ConnectionEKG();
+    EKGConn EKGConn = new EKGConn();
 
     //Dynamisk graf fra https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
     public static void main(String[] args) {

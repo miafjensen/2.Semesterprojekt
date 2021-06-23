@@ -1,9 +1,7 @@
-package org.example.UbrugteKlasser;
+package ubrugt.UbrugteKlasser;
 
 import org.example.Sensor.SensorObservable;
 import org.example.Sensor.SensorObserver;
-
-import java.util.ArrayList;
 
 public abstract class EKGDataGenerator implements SensorObservable {
 

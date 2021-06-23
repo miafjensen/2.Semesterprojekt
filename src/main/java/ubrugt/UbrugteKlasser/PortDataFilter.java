@@ -1,8 +1,4 @@
-package org.example.UbrugteKlasser;
-
-import com.google.common.base.CharMatcher;
-
-import java.sql.Array;
+package ubrugt.UbrugteKlasser;
 
 public abstract class PortDataFilter {
 
