@@ -78,7 +78,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
 
 
     @FXML
-    private synchronized void startMaaling() throws InterruptedException {
+    private synchronized void startMaaling() throws InterruptedException, java.util.ConcurrentModificationException {
         event = Executors.newSingleThreadScheduledExecutor();
         control = false;                    // bruges til andre knapper kan lukke event hvis det er igang inden der skiftes side
         startMålingButton.setDisable(true); // deaktiverer start knap så der ikke kan trykkes flere gange, og dermed starte trådene flere gange samtidigt
@@ -103,14 +103,13 @@ public class NyMaalingController implements SensorObserver, Initializable {
                     for (String[] indhold : placeholder) {
                         try {
                             mDTO.InsertIntoMeasurementsArray(logInController.getCpr(), indhold);
-                            System.out.println("printet til DB");
+                            placeholder.clear();
+                            System.out.println("sendt til db: " + date);
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.out.println("fejl i insert");
                         }
                     }
-                    placeholder.clear();
-                    System.out.println("sendt til db: " + date);
                 }), 1000, 5000, TimeUnit.MILLISECONDS);
 
 
@@ -153,7 +152,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
     public void notify(EKGConn EKGConn) {  //kaldes fra SensorObserver og giver besked når der er data at hente
         placeholder.add(EKGConn.getSplitData());      //bruger materiale fra ConnectionEKG
     }
-    public NyMaalingController() throws java.util.ConcurrentModificationException {
+    public NyMaalingController() {
         EKGConn EKGConn = new EKGConn();
         EKGConn.registerObserver(this);
         new Thread(EKGConn).start();
