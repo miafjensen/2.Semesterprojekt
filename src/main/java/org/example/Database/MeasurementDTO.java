@@ -31,7 +31,7 @@ public class MeasurementDTO {
         }
     }
 
-    // Test til indsætning i database table med et statement ad gangen
+    // Test til indsætning i database table med et statement ad gangen, kun brugt til test
     public void InsertIntoMeasurements(int value1, int value2) {
         String SQLMeasurements = "INSERT INTO measurements (Cpr, maaling) VALUES (?,?)";
         try {
@@ -63,7 +63,7 @@ public class MeasurementDTO {
         }
     }
 
-    // Se id, måling og dato fra tabellen der matcher CPR
+    // Se id, måling og dato fra tabellen der matcher CPR, kun brugt til test
     public ArrayList<MeasurementObjects> FindAllMeasurementResults(int CPR) {
 
         ArrayList liste = new ArrayList();
