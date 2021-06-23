@@ -78,7 +78,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
 
 
     @FXML
-    private synchronized void startMaaling() throws InterruptedException, java.util.ConcurrentModificationException {
+    private synchronized void startMaaling() throws java.util.ConcurrentModificationException {
         event = Executors.newSingleThreadScheduledExecutor();
         control = false;                    // bruges til andre knapper kan lukke event hvis det er igang inden der skiftes side
         startMålingButton.setDisable(true); // deaktiverer start knap så der ikke kan trykkes flere gange, og dermed starte trådene flere gange samtidigt
