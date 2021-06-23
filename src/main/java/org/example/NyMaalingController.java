@@ -14,6 +14,7 @@ import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
 import org.example.Sensor.EKGConn;
 import org.example.Sensor.SensorObserver;
+
 import java.util.Date;
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,6 @@ public class NyMaalingController implements SensorObserver, Initializable {
     LogInController logInController = new LogInController();
     int startOfPoints = 1; //angiver hvor "XYChart.series" skal starte, så grafen kan fortsætte derfra
     Date date = new Date();
-
 
 
     @FXML
@@ -66,20 +66,15 @@ public class NyMaalingController implements SensorObserver, Initializable {
             )
     );
 
-    public NyMaalingController() {
-        EKGConn EKGConn = new EKGConn();
-        EKGConn.registerObserver(this);
-        new Thread(EKGConn).start();
-    }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
-        cprLabel.setText("" + logInController.getCprTal());  // henter og viser cpr fra LogIn på cprLabel
-        lineChart.getData().add(series); // opretter grafen udfra givne punkter
-        //button event fundet her: http://tutorials.jenkov.com/javafx/button.html#button-events
-        stopMålingButton.setDisable(true); //deaktiverer stop knap, fordi der ikke er nogen event at stoppe
-    }
+        setCpr();
+        setLineChart();
+        disableStopButton();
+       }
 
 
     @FXML
@@ -95,29 +90,28 @@ public class NyMaalingController implements SensorObserver, Initializable {
                 }), 0, 3000, TimeUnit.MILLISECONDS);
 
         event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
-                    Platform.runLater(() -> {
+                Platform.runLater(() -> {
 
-                        Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
-                        series.getData().add(new XYChart.Data<String, Number>("" + startOfPoints++, random));  // laver koordinaterne til punktet
-                        series.getData().remove(0); //Sletter det tidligste punkt på grafen
+                    Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
+                    series.getData().add(new XYChart.Data<String, Number>("" + startOfPoints++, random));  // laver koordinaterne til punktet
+                    series.getData().remove(0); //Sletter det tidligste punkt på grafen
 
-                    }), 0, 100, TimeUnit.MILLISECONDS);
+                }), 0, 100, TimeUnit.MILLISECONDS);
 
-            event.scheduleAtFixedRate(() ->          // styrer overførslen til Databasen
-                    Platform.runLater(() -> {
-
-                        for (String[] indhold : placeholder) {
-                            try {
-                                mDTO.InsertIntoMeasurementsArray(logInController.getCprTal(), indhold);
-                                System.out.println("printet til DB");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                System.out.println("fejl i insert");
-                            }
+        event.scheduleAtFixedRate(() ->          // styrer overførslen til Databasen
+                Platform.runLater(() -> {
+                    for (String[] indhold : placeholder) {
+                        try {
+                            mDTO.InsertIntoMeasurementsArray(logInController.getCpr(), indhold);
+                            System.out.println("printet til DB");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("fejl i insert");
                         }
-                        placeholder.clear();
-                        System.out.println("sendt til db: " + date );
-                    }), 1000, 5000, TimeUnit.MILLISECONDS);
+                    }
+                    placeholder.clear();
+                    System.out.println("sendt til db: " + date);
+                }), 1000, 5000, TimeUnit.MILLISECONDS);
 
 
     }
@@ -147,7 +141,7 @@ public class NyMaalingController implements SensorObserver, Initializable {
         if (control == false) {
             event.shutdown();                       //lukker for de events der er startet af startMaaling
             startMålingButton.setDisable(false);    // genaktiverer start knap
-            stopMålingButton.setDisable(true);      // deaktiverer stop knape
+            stopMålingButton.setDisable(true);      // deaktiverer stop knap
             control = true;
         }
         App.setRoot("startside");
@@ -158,6 +152,25 @@ public class NyMaalingController implements SensorObserver, Initializable {
     @Override
     public void notify(EKGConn EKGConn) {  //kaldes fra SensorObserver og giver besked når der er data at hente
         placeholder.add(EKGConn.getSplitData());      //bruger materiale fra ConnectionEKG
+    }
+    public NyMaalingController() throws java.util.ConcurrentModificationException {
+        EKGConn EKGConn = new EKGConn();
+        EKGConn.registerObserver(this);
+        new Thread(EKGConn).start();
+    }
+
+    private void setCpr() {
+        //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
+        cprLabel.setText("" + logInController.getCpr());  // henter og viser cpr fra LogIn på cprLabel
+    }
+
+    private void setLineChart(){
+        lineChart.getData().add(series); // opretter grafen udfra givne punkter
+    }
+
+    private void disableStopButton(){
+        //button event fundet her: http://tutorials.jenkov.com/javafx/button.html#button-events
+        stopMålingButton.setDisable(true); //deaktiverer stop knap, fordi der ikke er nogen event at stoppe
     }
 }
 

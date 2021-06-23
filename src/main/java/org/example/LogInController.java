@@ -21,6 +21,7 @@ public class LogInController {
             cpr = cprUser.getText();
             CprTal = Integer.parseInt(cpr);
             App.setRoot("startside");
+            System.out.println(cpr + " godkendt " + CprTal);
         } else {
             //https://code.makery.ch/blog/javafx-dialogs-official/
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -29,12 +30,12 @@ public class LogInController {
             alert.setContentText("Indtast 6 cifre i CPR" +
                     "\nEksempel: 120101");
             alert.showAndWait();
+            System.out.println("fejl i CPR: " + cprUser.getText());
         }
-        //System.out.println(cpr + "  " + CprTal);
     }
 
     // laver globalt object der kan tilgås fra de andre controllers
-    public int getCprTal() {
+    public int getCpr() {
         return CprTal;
     }
 

@@ -4,6 +4,7 @@ import java.lang.Object.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import com.google.common.base.CharMatcher;
 import org.example.Database.DBConn;
 import org.example.Database.MeasurementDTO;
@@ -20,27 +21,27 @@ public class TestKlasse { // brygt til test af filtre til den rå data fra Ardui
     public static void main(String[] args) throws Exception {
 
         //DBConn DBConnklasse = new DBConn();
-       // Connection conn = DBConnklasse.getConnectionobject(user, password);
+        // Connection conn = DBConnklasse.getConnectionobject(user, password);
 
-       // MeasurementDTO cm = new MeasurementDTO(conn);
-    //    ConnectionEKG connEKG = new ConnectionEKG();
-       // PortDataFilter portDataFilter = new PortDataFilter();
+        // MeasurementDTO cm = new MeasurementDTO(conn);
+        EKGConn connEKG = new EKGConn();
+        // PortDataFilter portDataFilter = new PortDataFilter();
         //opret port - fint.
+        while (true) {
+            // String[] data = portDataFilter.dataString();
+            String[] data = connEKG.getSplitData();
+            Thread thread = new Thread(connEKG);
+            NyMaalingController nmc = new NyMaalingController();
+            thread.start();
 
-        //String[] data = portDataFilter.dataString();
-        //String[] data = connEKG.getSplittedData();
-       // Thread thread = new Thread(connEKG);
-        //NyMaalingController nmc = new NyMaalingController();
-      //  thread.start();
+            //for (String indhold : data) { System.out.println(indhold);
 
-    //    for (String indhold :data){
-           // System.out.println(indhold);
-      //  }
+            System.out.println(connEKG.getSplitData());}
 
-       // int cpr = 161198;
-        //cm.InsertIntoMeasurementsArray(cpr, data);
+            // int cpr = 161198;
+            //cm.InsertIntoMeasurementsArray(cpr, data);
 
-        // med String[]
+            // med String[]
        /* String[] dataStr = new String[150];
         while (true) {
             try {
@@ -68,7 +69,7 @@ public class TestKlasse { // brygt til test af filtre til den rå data fra Ardui
 
         }*/
 
-        // med int[]
+            // med int[]
         /*while(true){
 
         try{
@@ -133,10 +134,9 @@ public class TestKlasse { // brygt til test af filtre til den rå data fra Ardui
 
         }*/
 
-        //vi bruger en for/tælle løkke til noget, der skal køre kontinuerligt -
-        //hvad har vi indtil videre?
+            //vi bruger en for/tælle løkke til noget, der skal køre kontinuerligt -
+            //hvad har vi indtil videre?
 
+        }
     }
-}
-
 

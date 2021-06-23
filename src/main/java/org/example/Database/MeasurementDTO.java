@@ -3,7 +3,6 @@ package org.example.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import org.example.MeasurementObjects;
 
 public class MeasurementDTO {
@@ -57,8 +56,10 @@ public class MeasurementDTO {
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
+            System.out.println("batch sendt til database");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            System.out.println("fejl i indsætning af batch");
         }
     }
 

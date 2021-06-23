@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class DBConn {
     private  Connection connectionobject;
-    String schema = "Semesterprojekt"; //kan være forskellige på tværs af databaser
+    String schema = "Semesterprojekt2"; //kan være forskellige på tværs af databaser
     String DB_url = "jdbc:mysql://localhost:3306/" + schema;
     private String JDBC_driver = "com.mysql.cj.jdbc.Driver";
 
