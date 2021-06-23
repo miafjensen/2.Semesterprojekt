@@ -73,7 +73,7 @@ public class SeDataController implements Initializable {
             maalingColumn.setCellValueFactory(new PropertyValueFactory<>("maaling"));
             datoColumn.setCellValueFactory(new PropertyValueFactory<>("Dato"));
             tableView.setItems(oblist);
-            System.out.println(cpr + " søgte på: " + cprSearched);
+            System.out.println("bruger: " + cpr + " søgte på: " + cprSearched);
         } else {
             //Pop-up vindue ved fejl i CPR genbrugt fra logIn
             //https://code.makery.ch/blog/javafx-dialogs-official/
