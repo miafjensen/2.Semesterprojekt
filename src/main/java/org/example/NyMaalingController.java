@@ -55,19 +55,18 @@ public class NyMaalingController implements SensorObserver, Initializable {
     );
 
     XYChart.Series<String, Number> series = new XYChart.Series<>(
-            FXCollections.observableArrayList(          //den serie af punkter vi starter med
-                    // koordinater til serien, der med til at sørge for hvor mange punkter der er fra start, som påvirker hvor mange punkter der kan ses ad gangen
+            FXCollections.observableArrayList(
+                    //den serie af punkter vi starter med
+   /* koordinater til serien, der med til at sørge for hvor mange punkter der er fra start,
+    som påvirker hvor mange punkter der kan ses ad gangen, der er 60*/
                     new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0),
                     new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0),
                     new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0), new XYChart.Data<>("" + 0, 0)
                     //Dynamisk graf lavet ved hjælp af:
                     // https://edencoding.com/javafx-charts
-                    // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
+  // https://levelup.gitconnected.com/realtime-charts-with-javafx-ed33c46b9c8d
             )
     );
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,24 +75,32 @@ public class NyMaalingController implements SensorObserver, Initializable {
         disableStopButton();
        }
 
-
     @FXML
     private synchronized void startMaaling() throws java.util.ConcurrentModificationException {
         event = Executors.newSingleThreadScheduledExecutor();
-        control = false;                    // bruges til andre knapper kan lukke event hvis det er igang inden der skiftes side
-        startMålingButton.setDisable(true); // deaktiverer start knap så der ikke kan trykkes flere gange, og dermed starte trådene flere gange samtidigt
-        stopMålingButton.setDisable(false); // aktiverer stop knap
-        event.scheduleAtFixedRate(() ->          // styrer puls simulering
+        control = false;
+        // bruges til andre knapper kan lukke event hvis det er igang inden der skiftes side
+        startMålingButton.setDisable(true);
+        // deaktiverer start knap så der ikke kan trykkes flere gange,
+        // og dermed starte trådene flere gange samtidigt
+        stopMålingButton.setDisable(false);
+        // aktiverer stop knap
+        event.scheduleAtFixedRate(() ->
+                // styrer puls simulering
                 Platform.runLater(() -> {
-                    int puls = (int) Math.round(110 - (Math.random() * 60)); //generer heltal mellem 60 og 110
+                    int puls = (int) Math.round(110 - (Math.random() * 60));
+                    //generer heltal mellem 60 og 110
                     pulsLabel.setText("" + puls);
                 }), 0, 3000, TimeUnit.MILLISECONDS);
 
         event.scheduleAtFixedRate(() ->         // styrer vores dynamiske graf
                 Platform.runLater(() -> {
 
-                    Integer random = ThreadLocalRandom.current().nextInt(1000);     // genererer random int op til 1000
-                    series.getData().add(new XYChart.Data<String, Number>("" + startOfPoints++, random));  // laver koordinaterne til punktet
+                    Integer random = ThreadLocalRandom.current().nextInt(1000);
+                    // genererer random int op til 1000
+                    series.getData().add(new XYChart.Data<String, Number>(""
+                            + startOfPoints++, random));
+                    // laver koordinaterne til punktet
                     series.getData().remove(0); //Sletter det tidligste punkt på grafen
 
                 }), 0, 100, TimeUnit.MILLISECONDS);
@@ -117,18 +124,24 @@ public class NyMaalingController implements SensorObserver, Initializable {
 
     @FXML
     private void stopMaaling() {
-        event.shutdown();                       //lukker for de events der er startet af startMaaling
-        startMålingButton.setDisable(false);    // genaktiverer start knap
-        stopMålingButton.setDisable(true);      // deaktiverer stop knap
+        event.shutdown();
+        //lukker for de events der er startet af startMaaling
+        startMålingButton.setDisable(false);
+        // genaktiverer start knap
+        stopMålingButton.setDisable(true);
+        // deaktiverer stop knap
         control = true;
     }
 
     @FXML
     private void switchToLogIn() throws IOException {
         if (control == false) {
-            event.shutdown();                       //lukker for de events der er startet af startMaaling
-            startMålingButton.setDisable(false);    // genaktiverer start knap
-            stopMålingButton.setDisable(true);      // deaktiverer stop knape
+            event.shutdown();
+            //lukker for de events der er startet af startMaaling
+            startMålingButton.setDisable(false);
+            // genaktiverer start knap
+            stopMålingButton.setDisable(true);
+            // deaktiverer stop knape
             control = true;
         }
 
@@ -138,19 +151,25 @@ public class NyMaalingController implements SensorObserver, Initializable {
     @FXML
     private void switchToStartside() throws IOException {
         if (control == false) {
-            event.shutdown();                       //lukker for de events der er startet af startMaaling
-            startMålingButton.setDisable(false);    // genaktiverer start knap
-            stopMålingButton.setDisable(true);      // deaktiverer stop knap
+            event.shutdown();
+            //lukker for de events der er startet af startMaaling
+            startMålingButton.setDisable(false);
+            // genaktiverer start knap
+            stopMålingButton.setDisable(true);
+            // deaktiverer stop knap
             control = true;
         }
         App.setRoot("startside");
     }
 
-    ArrayList<String[]> placeholder = new ArrayList<String[]>();//buffer til String arrays til data fra sensor
+    ArrayList<String[]> placeholder = new ArrayList<String[]>();
+    //buffer til String arrays til data fra sensor
 
     @Override
-    public void notify(EKGConn EKGConn) {  //kaldes fra SensorObserver og giver besked når der er data at hente
-        placeholder.add(EKGConn.getSplitData());      //bruger materiale fra ConnectionEKG
+    public void notify(EKGConn EKGConn) {
+        //kaldes fra SensorObserver og giver besked når der er data at hente
+        placeholder.add(EKGConn.getSplitData());
+        //bruger materiale fra ConnectionEKG
     }
     public NyMaalingController() {
         EKGConn EKGConn = new EKGConn();
@@ -159,17 +178,21 @@ public class NyMaalingController implements SensorObserver, Initializable {
     }
 
     private void setCpr() {
-        //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
-        cprLabel.setText("" + logInController.getCpr());  // henter og viser cpr fra LogIn på cprLabel
+        //inspireret af: https://stackoverflow.com/questions/24409550/
+        // how-to-pass-a-variable-through-javafx-application-to-the-controller
+        cprLabel.setText("" + logInController.getCpr());
+        // henter og viser cpr fra LogIn på cprLabel
     }
 
     private void setLineChart(){
-        lineChart.getData().add(series); // opretter grafen udfra givne punkter
+        lineChart.getData().add(series);
+        // opretter grafen udfra givne punkter
     }
 
     private void disableStopButton(){
         //button event fundet her: http://tutorials.jenkov.com/javafx/button.html#button-events
-        stopMålingButton.setDisable(true); //deaktiverer stop knap, fordi der ikke er nogen event at stoppe
+        stopMålingButton.setDisable(true);
+        //deaktiverer stop knap, fordi der ikke er nogen event at stoppe
     }
 }
 

@@ -18,11 +18,14 @@ public class MeasurementDTO {
         createTable();
     }
 
-    // opretter automatisk table når der oprettes forbindelse til sql, hvis den ikke allerede eksisterer i databasen
+    // opretter automatisk table når der oprettes forbindelse til sql,
+    // hvis den ikke allerede eksisterer i databasen
     public void createTable() {
         try {
-            String SQLTable = "create table if not exists measurements ( id int auto_increment primary key," +
-                    "Cpr varchar(6) not null, maaling text not null, Dato timestamp default CURRENT_TIMESTAMP null);";
+            String SQLTable = "create table if not exists measurements " +
+                    "( id int auto_increment primary key," +
+                    "Cpr varchar(6) not null, maaling text not null, " +
+                    "Dato timestamp default CURRENT_TIMESTAMP null);";
             Statement stmt = connection.createStatement();
             stmt.execute(SQLTable);
             System.out.println("table oprettet eller eksisterer allerede");
@@ -68,7 +71,8 @@ public class MeasurementDTO {
 
         ArrayList liste = new ArrayList();
 
-        String SQLResults = "SELECT id, maaling, Dato FROM measurements WHERE Cpr = " + CPR + ";";
+        String SQLResults = "SELECT id, maaling, Dato FROM measurements WHERE Cpr = "
+                + CPR + ";";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SQLResults);

@@ -8,7 +8,8 @@ public class VisSensor {
     public static void main(String[] args) throws Exception {
         System.out.println("Viser sensorer");
 
-        // Læs https://fazecast.github.io/jSerialComm/javadoc/com/fazecast/jSerialComm/SerialPort.html
+        // Læs https://fazecast.github.io/jSerialComm/javadoc/com/fazecast/
+        // jSerialComm/SerialPort.html
         // for dokumentation af SerialPort klassen
         System.out.println("SerialPort.getVersion() = " + SerialPort.getVersion());
 
@@ -46,7 +47,8 @@ public class VisSensor {
      * Læser en streng fra en port
      *
      * @param port porten, der skal læses fra. Porten skal være åben
-     * @return en streng læst fra porten. Strengen kan være tom. Returnerer null hvis der ikke kunne læses fra porten
+     * @return en streng læst fra porten. Strengen kan være tom.
+     * Returnerer null hvis der ikke kunne læses fra porten
      */
     private static String hentStrengFraPort(SerialPort port) {
         byte[] buffer = new byte[1024];

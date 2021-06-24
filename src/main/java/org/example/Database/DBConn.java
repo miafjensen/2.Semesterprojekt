@@ -22,7 +22,8 @@ public class DBConn {
 
         }catch (SQLException | ClassNotFoundException ex){
             ex.printStackTrace();
-            System.out.println("Tjek om schema, user og password er det rigtige til din database i DBConn klassen, henholdvis linje 9, 17 og 18");
+            System.out.println("Tjek om schema, user og password er det rigtige" +
+                    " til din database i DBConn klassen, henholdvis linje 9, 17 og 18");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl i forbindelse til Database");
             alert.setHeaderText("IKKE FORBUNDET TIL DATABASE");

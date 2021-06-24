@@ -20,8 +20,10 @@ public class StartsideController implements Initializable {
     }
 
     private void setCpr() {
-        //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
-        cprLabel.setText("" + logInController.getCpr());  // henter og viser cpr fra LogIn på cprLabel
+        /*inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-
+        variable-through-javafx-application-to-the-controller*/
+        cprLabel.setText("" + logInController.getCpr());
+        // henter og viser cpr fra LogIn på cprLabel
     }
 
     @FXML

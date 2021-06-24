@@ -16,7 +16,8 @@ public class LogInController {
 
     @FXML
     private void switchToStartside(ActionEvent ae) throws IOException {
-        // sørger for at det kun er tal på 6 cifre:  http://tutorials.jenkov.com/java-regex/index.html
+        /* sørger for at det kun er tal på 6 cifre:
+        http://tutorials.jenkov.com/java-regex/index.html*/
         if (cprUser.getText().matches("\\d{6}")) {
             cpr = cprUser.getText();
             CprTal = Integer.parseInt(cpr);
@@ -33,10 +34,8 @@ public class LogInController {
             System.out.println("fejl i CPR: " + cprUser.getText());
         }
     }
-
     // laver globalt object der kan tilgås fra de andre controllers
     public int getCpr() {
         return CprTal;
     }
-
 }

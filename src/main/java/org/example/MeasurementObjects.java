@@ -2,7 +2,8 @@ package org.example;
 
 import java.sql.Timestamp;
 
-public class MeasurementObjects { // bruges i SeDataController, når data hentes til tableView
+public class MeasurementObjects {
+    // bruges i SeDataController, når data hentes til tableView
     int id;
     String maaling;
     Timestamp dato;

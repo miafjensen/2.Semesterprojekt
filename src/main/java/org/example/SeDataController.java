@@ -54,20 +54,28 @@ public class SeDataController implements Initializable {
     }
 
     private void setCpr() {
-        //inspireret af: https://stackoverflow.com/questions/24409550/how-to-pass-a-variable-through-javafx-application-to-the-controller
-        cprLabel.setText("" + logInController.getCpr());  // henter og viser cpr fra LogIn på cprLabel
+        /*inspireret af: https://stackoverflow.com/questions/24409550/
+        how-to-pass-a-variable-through-javafx-application-to-the-controller*/
+        cprLabel.setText("" + logInController.getCpr());
+        // henter og viser cpr fra LogIn på cprLabel
     }
 
     @FXML
-    private void searchByCpr(ActionEvent ae) throws IOException, SQLException { //bruger indtastede cpr til at søge på matchene data i databasen
-        if (cprField.getText().matches("\\d{6}")) {  //kontrollerer indtastningen, genbrugt fra logIn
+    private void searchByCpr(ActionEvent ae) throws IOException, SQLException {
+        //bruger indtastede cpr til at søge på matchene data i databasen
+        if (cprField.getText().matches("\\d{6}")) {
+            //kontrollerer indtastningen, genbrugt fra logIn
             tableView.getItems().clear();
             cpr = cprField.getText();
             cprSearched = Integer.parseInt(cpr);
-            ResultSet rs = conn.createStatement().executeQuery("SELECT id, maaling, Dato FROM measurements WHERE Cpr =" + cprSearched + ";");
-            //tableView lavet ved hjælp af: https://www.youtube.com/watch?v=LoiQVoNil9Q&ab_channel=RashidIqbal
+            ResultSet rs = conn.createStatement().executeQuery(
+                    "SELECT id, maaling, Dato FROM measurements WHERE Cpr ="
+                            + cprSearched + ";");
+            /*tableView lavet ved hjælp af: https://www.youtube.com/
+            watch?v=LoiQVoNil9Q&ab_channel=RashidIqbal*/
             while (rs.next()) {
-                oblist.add(new MeasurementObjects(rs.getInt("id"), rs.getString("maaling"), rs.getTimestamp("Dato")));
+                oblist.add(new MeasurementObjects(rs.getInt("id"),
+                        rs.getString("maaling"), rs.getTimestamp("Dato")));
             }
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             maalingColumn.setCellValueFactory(new PropertyValueFactory<>("maaling"));
